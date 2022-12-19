@@ -8,24 +8,24 @@ import java.util.UUID;
  */
 public interface PronounStore {
 
-	/**
-	 * Gets all predefined pronoun sets.
-	 */
-	PronounSupplier predefined();
+    /**
+     * Gets all predefined pronoun sets.
+     */
+    PronounSupplier predefined();
 
-	/**
-	 * Gets a player's set pronouns.
-	 *
-	 * @param player the player's UUID
-	 * @return a list of pronouns a player has set, or an empty list if none have been returned.
-	 */
-	List<PronounSet> sets(UUID player);
+    /**
+     * Gets a player's set pronouns.
+     *
+     * @param player the player's UUID
+     * @return a list of pronouns a player has set, or an empty list if none have been returned.
+     */
+    List<PronounSet> sets(UUID player);
 
-	/**
-	 * Sets a player's pronouns.
-	 *
-	 * @param player the player's UUID
-	 * @param sets   the pronouns to set. Each entry must be unique.
-	 */
-	void set(UUID player, List<PronounSet> sets);
+    /**
+     * Sets a player's pronouns.
+     *
+     * @param player the player's UUID
+     * @param sets   the pronouns to set. Each entry must be unique.
+     */
+    void set(UUID player, List<PronounSet> sets);
 }
