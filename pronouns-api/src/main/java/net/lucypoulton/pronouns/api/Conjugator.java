@@ -10,7 +10,10 @@ package net.lucypoulton.pronouns.api;
  * <li>conjugated for they/them: "they have"</li>
  * </ul>
  *
- * Enum entries are written in the inifinitive without the "to" prefix, for example BE, HAVE.
+ * The present simple is used here as it's the most flexible. Most other tenses are formed by combining
+ * the present simple with another verb, which is not conjugated differently depending on the subject.
+ * <p>
+ * Enum entries are written in the infinitive without the "to" prefix, for example BE, HAVE.
  * It goes without saying that I don't plan on listing every single verb in the English language here,
  * so only a few are provided. A simple ternary on {@link PronounSet#plural()} will work for those that aren't.
  */
