@@ -1,4 +1,4 @@
-package net.lucypoulton.pronouns.api.impl;
+package net.lucypoulton.pronouns.api.impl.set;
 
 import net.lucypoulton.pronouns.api.PronounSet;
 

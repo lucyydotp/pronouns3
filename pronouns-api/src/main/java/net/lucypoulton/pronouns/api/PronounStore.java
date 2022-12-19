@@ -1,7 +1,6 @@
 package net.lucypoulton.pronouns.api;
 
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -12,7 +11,7 @@ public interface PronounStore {
 	/**
 	 * Gets all predefined pronoun sets.
 	 */
-	Set<PronounSet> predefined();
+	PronounSupplier predefined();
 
 	/**
 	 * Gets a player's set pronouns.

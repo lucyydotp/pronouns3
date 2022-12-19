@@ -1,9 +1,9 @@
-package net.lucypoulton.pronouns.api.impl;
+package net.lucypoulton.pronouns.api.impl.set;
 
 import net.lucypoulton.pronouns.api.PronounSet;
 import org.jetbrains.annotations.NotNull;
 
-public record PronounSetImpl(
+public record SimplePronounSet(
 		@NotNull String subjective,
 		@NotNull String objective,
 		@NotNull String possessiveAdj,

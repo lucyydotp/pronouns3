@@ -1,15 +1,16 @@
 package net.lucypoulton.pronouns.api.impl;
 
 import net.lucypoulton.pronouns.api.PronounSet;
+import net.lucypoulton.pronouns.api.PronounSupplier;
+import net.lucypoulton.pronouns.api.impl.set.SimplePronounSet;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.function.Supplier;
 
 public class PronounParser {
-	private final Supplier<Set<PronounSet>> store;
+	private final PronounSupplier store;
 
-	public PronounParser(final Supplier<Set<PronounSet>> store) {
+	public PronounParser(final PronounSupplier store) {
 		this.store = store;
 	}
 
@@ -30,7 +31,7 @@ public class PronounParser {
 				final var last = split[queuePoint+4];
 				final var isPlural = last.endsWith(":p");
 				// TODO - parse
-				out.add(new PronounSetImpl(
+				out.add(new SimplePronounSet(
 						split[queuePoint],
 						split[queuePoint+1],
 						split[queuePoint+2],
