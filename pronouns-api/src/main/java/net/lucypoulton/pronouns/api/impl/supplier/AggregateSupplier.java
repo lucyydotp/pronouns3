@@ -4,6 +4,8 @@ import net.lucypoulton.pronouns.api.PronounSet;
 import net.lucypoulton.pronouns.api.PronounSupplier;
 
 import java.util.Set;
+import java.util.stream.Collectors;
+
 public record AggregateSupplier(Set<PronounSupplier> providers) implements PronounSupplier {
 
     public AggregateSupplier(PronounSupplier... suppliers) {
@@ -11,6 +13,6 @@ public record AggregateSupplier(Set<PronounSupplier> providers) implements Prono
     }
     @Override
     public Set<PronounSet> get() {
-        return Set.copyOf(providers.stream().flatMap(p -> p.get().stream()).toList());
+        return providers.stream().flatMap(p -> p.get().stream()).collect(Collectors.toUnmodifiableSet());
     }
 }
