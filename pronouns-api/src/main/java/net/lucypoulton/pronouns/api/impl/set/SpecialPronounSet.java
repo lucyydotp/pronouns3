@@ -46,6 +46,11 @@ public class SpecialPronounSet implements PronounSet {
 	}
 
 	@Override
+	public boolean includesPronoun(String pronoun) {
+		return this.name.equalsIgnoreCase(pronoun);
+	}
+
+	@Override
 	public String toString() {
 		return this.name;
 	}

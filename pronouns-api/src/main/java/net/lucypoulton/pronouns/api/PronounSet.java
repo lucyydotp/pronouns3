@@ -2,9 +2,12 @@ package net.lucypoulton.pronouns.api;
 
 import net.lucypoulton.pronouns.api.impl.set.SimplePronounSet;
 import net.lucypoulton.pronouns.api.impl.set.SpecialPronounSet;
+import net.lucypoulton.pronouns.api.impl.util.StringUtils;
 import org.jetbrains.annotations.Contract;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A set of pronouns.
@@ -114,4 +117,22 @@ public interface PronounSet {
      * A supplier for all pronound defined in {@link Builtins}, except for {@link Builtins#UNSET}.
      */
     PronounSupplier builtins = () -> Set.of(Builtins.THEY, Builtins.HE, Builtins.SHE, Builtins.ANY, Builtins.ASK);
+
+    /**
+     * Formats a list of pronoun sets.
+     * If there's one set in the list, returns the value of {@link #toString()}.
+     * Otherwise, maps each set to either its subjective pronoun or its name depending on its type,
+     * and joins them with a slash.
+     * @param sets a list of pronoun sets, containing at least one element.
+     */
+    static String format(List<PronounSet> sets) {
+        return switch (sets.size()) {
+            case 0 -> throw new IllegalArgumentException("A list of 0 pronouns cannot be formatted");
+            case 1 -> sets.get(0).toString();
+            default -> sets.stream()
+                            .map(set -> set instanceof SpecialPronounSet ? set.toString() : set.subjective())
+                            .map(StringUtils::capitalize)
+                            .collect(Collectors.joining("/"));
+        };
+    }
 }

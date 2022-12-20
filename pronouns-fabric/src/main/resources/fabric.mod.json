@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "pronouns-fabric",
+  "version": "${version}",
+  "name": "ProNouns",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/pronouns/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.lucypoulton.pronouns.fabric.ProNounsFabric"
+    ]
+  },
+  "mixins": [
+    "pronouns.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.11",
+    "fabric": "*",
+    "minecraft": "1.19.3"
+  }
+}

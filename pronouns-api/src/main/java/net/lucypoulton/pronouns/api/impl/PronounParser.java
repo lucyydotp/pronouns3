@@ -4,7 +4,7 @@ import net.lucypoulton.pronouns.api.PronounSet;
 import net.lucypoulton.pronouns.api.PronounSupplier;
 import net.lucypoulton.pronouns.api.impl.set.SimplePronounSet;
 
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 public class PronounParser {
@@ -16,7 +16,7 @@ public class PronounParser {
 
 	public List<PronounSet> parse(String input) {
 		final var split = input.split("/");
-		final var out = new ArrayList<PronounSet>();
+		final var out = new LinkedHashSet<PronounSet>();
 		final var predefined = store.get();
 		var queuePoint = 0;
 		for (int i = 0; i < split.length; i++) {
@@ -41,7 +41,7 @@ public class PronounParser {
 				));
 			}
 		}
-
-		return out;
+		if (out.isEmpty()) throw new IllegalArgumentException("Failed to parse " + input);
+		return List.copyOf(out);
 	}
 }
