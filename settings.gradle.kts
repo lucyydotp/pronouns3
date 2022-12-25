@@ -1,6 +1,6 @@
 rootProject.name = "pronouns"
 
-include("pronouns-api", "pronouns-common", "pronouns-fabric")
+include("pronouns-api", "pronouns-common", "pronouns-fabric", "pronouns-paper")
 
 pluginManagement {
     repositories {
@@ -17,7 +17,7 @@ dependencyResolutionManagement {
         version("adventure", "4.12.0")
         version("cloud", "1.8.0")
         library("adventure", "net.kyori", "adventure-api").versionRef("adventure")
-        listOf("core", "annotations", "fabric").forEach {
+        listOf("core", "annotations", "fabric", "paper").forEach {
             library("cloud.$it", "cloud.commandframework", "cloud-$it").versionRef("cloud")
         }
     }

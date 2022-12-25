@@ -1,0 +1,6 @@
+name: ProNouns
+version: '${version}'
+main: net.lucypoulton.pronounspaper.PronounsPaper
+api-version: 1.19
+authors: [lucyydotp]
+website: https://lucypoulton.net

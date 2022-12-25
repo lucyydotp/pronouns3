@@ -6,7 +6,6 @@ import cloud.commandframework.fabric.FabricServerCommandManager;
 import net.lucypoulton.pronouns.common.platform.CommandSender;
 import net.lucypoulton.pronouns.common.platform.Platform;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,8 +18,8 @@ public class FabricPlatform implements Platform {
     private MinecraftServer server;
     private final CommandManager<CommandSender> manager = new FabricServerCommandManager<>(
             CommandExecutionCoordinator.simpleCoordinator(),
-            source -> (CommandSender) source,
-            source -> (ServerCommandSource) source
+            CommandSourceWrapper::new,
+            source -> ((CommandSourceWrapper) source).source()
     );
 
     public void setServer(MinecraftServer server) {
