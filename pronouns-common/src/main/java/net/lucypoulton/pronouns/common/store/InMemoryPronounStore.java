@@ -1,11 +1,14 @@
-package net.lucypoulton.pronouns.fabric;
+package net.lucypoulton.pronouns.common.store;
 
 import net.lucypoulton.pronouns.api.PronounSet;
 import net.lucypoulton.pronouns.api.PronounStore;
 import net.lucypoulton.pronouns.api.PronounSupplier;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class InMemoryPronounStore implements PronounStore {
 
@@ -14,6 +17,7 @@ public class InMemoryPronounStore implements PronounStore {
     public PronounSupplier predefined() {
         return PronounSet.builtins;
     }
+
 
     @Override
     public List<PronounSet> sets(UUID player) {

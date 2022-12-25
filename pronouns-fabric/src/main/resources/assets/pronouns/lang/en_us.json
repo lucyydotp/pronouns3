@@ -1,0 +1,15 @@
+{
+  "pronouns.command.noPlayer": "Please specify a player.",
+
+  "pronouns.command.get.self": "Your pronouns are set to %s",
+  "pronouns.command.get.other": "%s's pronouns are %s.",
+  "pronouns.command.get.unset.self": "You haven't set your pronouns.",
+  "pronouns.command.get.unset.other": "%s hasn't set their pronouns.",
+
+  "pronouns.command.set.self": "Set your pronouns to %s.",
+  "pronouns.command.set.other": "Set %s's pronouns to %s.",
+  "pronouns.command.set.badSet": "Unable to parse %s.",
+
+  "pronouns.command.clear.self": "Cleared your pronouns.",
+  "pronouns.command.clear.other": "Cleared %s's pronouns."
+}
