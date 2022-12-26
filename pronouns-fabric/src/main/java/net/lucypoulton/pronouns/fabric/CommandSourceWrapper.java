@@ -1,4 +1,4 @@
-package net.lucypoulton.pronouns.fabric.nms;
+package net.lucypoulton.pronouns.fabric;
 
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.audience.ForwardingAudience;
@@ -10,16 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Optional;
 import java.util.UUID;
 
-public class CommandSourceWrapper implements CommandSender, ForwardingAudience.Single {
-    private final ServerCommandSource source;
-
-    public CommandSourceWrapper(ServerCommandSource source) {
-        this.source = source;
-    }
-
-    public ServerCommandSource source() {
-        return source;
-    }
+public record CommandSourceWrapper(ServerCommandSource source) implements CommandSender, ForwardingAudience.Single {
 
     @Override
     public @NotNull Audience audience() {

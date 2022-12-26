@@ -11,14 +11,16 @@ import net.lucypoulton.pronouns.common.cmd.GetCommand;
 import net.lucypoulton.pronouns.common.cmd.SetCommand;
 import net.lucypoulton.pronouns.common.platform.CommandSender;
 import net.lucypoulton.pronouns.common.platform.Platform;
-import net.lucypoulton.pronouns.common.store.InMemoryPronounStore;
 
 public class ProNouns implements ProNounsPlugin {
 
-    private final PronounStore store = new InMemoryPronounStore();
-    private final PronounParser parser = new PronounParser(store.predefined());
+    private final PronounParser parser;
+    private final Platform platform;
 
     public ProNouns(Platform platform) {
+        this.platform = platform;
+        this.parser = new PronounParser(() -> platform.store().predefined().get());
+
         GlobalTranslator.translator().addSource(ProNounsTranslations.registry());
         final var commandManager = platform.commandManager();
         final var annotationParser = new AnnotationParser<>(
@@ -31,14 +33,14 @@ public class ProNouns implements ProNounsPlugin {
         commandManager.parserRegistry().registerSuggestionProvider("player",
                 (name, ctx) -> platform.listPlayers());
 
-        annotationParser.parse(new GetCommand(store, platform));
+        annotationParser.parse(new GetCommand(platform));
         annotationParser.parse(new SetCommand(this, platform));
-        annotationParser.parse(new ClearCommand(store, platform));
+        annotationParser.parse(new ClearCommand(platform));
     }
 
     @Override
     public PronounStore store() {
-        return store;
+        return platform.store();
     }
 
     @Override

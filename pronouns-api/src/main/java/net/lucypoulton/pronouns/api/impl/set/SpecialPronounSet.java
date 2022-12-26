@@ -2,6 +2,8 @@ package net.lucypoulton.pronouns.api.impl.set;
 
 import net.lucypoulton.pronouns.api.PronounSet;
 
+import java.util.Locale;
+
 /**
  * A set that proxies pronouns from another but with a custom name.
  */
@@ -53,5 +55,10 @@ public class SpecialPronounSet implements PronounSet {
 	@Override
 	public String toString() {
 		return this.name;
+	}
+
+	@Override
+	public String toFullString() {
+		return this.name.toLowerCase(Locale.ROOT);
 	}
 }

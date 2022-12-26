@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.lucypoulton.pronouns.api.PronounStore;
 import net.lucypoulton.pronouns.common.ProNouns;
 import net.lucypoulton.pronouns.common.store.InMemoryPronounStore;
-import net.lucypoulton.pronouns.fabric.nms.FabricPlatform;
 
 public class ProNounsFabric implements ModInitializer {
 

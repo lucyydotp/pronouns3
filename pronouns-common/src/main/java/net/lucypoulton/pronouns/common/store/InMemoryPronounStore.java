@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * A non-persistent store intended for testing.
+ */
 public class InMemoryPronounStore implements PronounStore {
 
     private final Map<UUID, List<PronounSet>> storage = new HashMap<>();

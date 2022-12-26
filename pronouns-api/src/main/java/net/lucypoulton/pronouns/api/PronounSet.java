@@ -49,6 +49,20 @@ public interface PronounSet {
     @Override
     String toString();
 
+    /**
+     * Gets this pronoun set in a format that can be parsed by a {@link net.lucypoulton.pronouns.api.impl.PronounParser}.
+     */
+    default String toFullString() {
+        final StringBuilder out = new StringBuilder();
+        out.append(subjective()).append("/")
+                .append(objective()).append("/")
+                .append(possessiveAdj()).append("/")
+                .append(possessive()).append("/")
+                .append(reflexive());
+        if (plural()) out.append(":p");
+        return out.toString();
+    }
+
     default boolean includesPronoun(String pronoun) {
         return subjective().equalsIgnoreCase(pronoun) ||
                 objective().equalsIgnoreCase(pronoun) ||

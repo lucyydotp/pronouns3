@@ -1,8 +1,9 @@
-package net.lucypoulton.pronouns.fabric.nms;
+package net.lucypoulton.pronouns.fabric;
 
 import cloud.commandframework.CommandManager;
 import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.fabric.FabricServerCommandManager;
+import net.lucypoulton.pronouns.api.PronounStore;
 import net.lucypoulton.pronouns.common.platform.CommandSender;
 import net.lucypoulton.pronouns.common.platform.Platform;
 import net.minecraft.server.MinecraftServer;
@@ -28,6 +29,11 @@ public class FabricPlatform implements Platform {
 
     private Optional<CommandSender> get(@Nullable ServerPlayerEntity entity) {
         return Optional.ofNullable(entity).map(e -> (CommandSender) e.getCommandSource());
+    }
+
+    @Override
+    public PronounStore store() {
+        return NBTPronounStore.server(server);
     }
 
     @Override
