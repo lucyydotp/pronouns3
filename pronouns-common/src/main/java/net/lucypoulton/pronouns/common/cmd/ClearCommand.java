@@ -31,10 +31,9 @@ public class ClearCommand {
         }
 
         store.set(player.uuid().get(), List.of());
-        commandSender.sendMessage(sender.isNotSender() ?
-                translatable("pronouns.command.clear.other")
-                        .args(text(player.name())) :
-                translatable("pronouns.command.clear.self")
+        commandSender.sendMessage(
+                translatable("pronouns.command.clear." + (sender.isNotSender() ? "other" : "self"))
+                        .args(text(player.name()))
         );
     }
 }

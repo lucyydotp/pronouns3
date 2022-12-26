@@ -2,6 +2,7 @@ package net.lucypoulton.pronouns.common;
 
 import cloud.commandframework.annotations.AnnotationParser;
 import cloud.commandframework.meta.SimpleCommandMeta;
+import net.kyori.adventure.translation.GlobalTranslator;
 import net.lucypoulton.pronouns.api.ProNounsPlugin;
 import net.lucypoulton.pronouns.api.PronounStore;
 import net.lucypoulton.pronouns.api.impl.PronounParser;
@@ -18,6 +19,7 @@ public class ProNouns implements ProNounsPlugin {
     private final PronounParser parser = new PronounParser(store.predefined());
 
     public ProNouns(Platform platform) {
+        GlobalTranslator.translator().addSource(ProNounsTranslations.registry());
         final var commandManager = platform.commandManager();
         final var annotationParser = new AnnotationParser<>(
                 commandManager,

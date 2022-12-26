@@ -34,13 +34,13 @@ public class GetCommand {
                     .args(text(targetPlayer.name())));
             return;
         }
-        sender.sendMessage(targetCommandSender.isNotSender() ?
-                translatable("pronouns.command.get.other")
+        sender.sendMessage(
+                translatable("pronouns.command.get." + (targetCommandSender.isNotSender() ? "other" : "self"))
                         .args(
-                                text(targetPlayer.name()),
-                                text(PronounSet.format(pronouns))
-                        ) : translatable("pronouns.command.get.self")
-                .args(text(PronounSet.format(pronouns)))
+                                text(PronounSet.format(pronouns)),
+                                text(targetPlayer.name())
+                        )
+
         );
     }
 }

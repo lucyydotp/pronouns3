@@ -13,16 +13,17 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
-    implementation(project(":pronouns-common"))
-    implementation(libs.cloud.paper)
+    shadow(project(":pronouns-common"))
+    shadow(libs.cloud.paper)
+    shadow(libs.cloud.annotations)
 }
 
 tasks {
     shadowJar {
+        configurations = listOf(project.configurations.shadow.get())
         archiveClassifier.set("")
         relocate("cloud.commandframework", "net.lucypoulton.pronouns.shadow.cloud")
         relocate("io.leangen.geantyref", "net.lucypoulton.pronouns.shadow.geantyref")
-        minimize()
     }
 
     build {

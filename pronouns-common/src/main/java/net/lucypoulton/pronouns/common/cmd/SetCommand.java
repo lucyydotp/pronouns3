@@ -36,13 +36,11 @@ public class SetCommand {
         try {
             final var pronouns = plugin.parser().parse(value);
             plugin.store().set(player.uuid().get(), pronouns);
-            sender.sendMessage(target.isNotSender() ?
-                    translatable("pronouns.command.set.other").args(
-                            text(player.name()),
-                            text(PronounSet.format(pronouns))
-                    ) :
-                    translatable("pronouns.command.set.self")
-                            .args(text(PronounSet.format(pronouns)))
+            sender.sendMessage(
+                    translatable("pronouns.command.set." + (target.isNotSender() ? "other" : "self")).args(
+                            text(PronounSet.format(pronouns)),
+                            text(player.name())
+                    )
             );
             return;
         } catch (IllegalArgumentException ignored) {
