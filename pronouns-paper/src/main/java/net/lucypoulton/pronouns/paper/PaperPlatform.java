@@ -1,8 +1,8 @@
 package net.lucypoulton.pronouns.paper;
 
 import cloud.commandframework.CommandManager;
-import cloud.commandframework.bukkit.BukkitCommandManager;
 import cloud.commandframework.execution.CommandExecutionCoordinator;
+import cloud.commandframework.paper.PaperCommandManager;
 import net.lucypoulton.pronouns.common.platform.CommandSender;
 import net.lucypoulton.pronouns.common.platform.Platform;
 import org.bukkit.Bukkit;
@@ -18,7 +18,7 @@ public class PaperPlatform implements Platform {
 
     public PaperPlatform(ProNounsPaper plugin) {
         try {
-            this.manager = new BukkitCommandManager<>(plugin,
+            this.manager = new PaperCommandManager<>(plugin,
                     CommandExecutionCoordinator.simpleCoordinator(),
                     BukkitCommandSenderWrapper::new,
                     sender -> ((BukkitCommandSenderWrapper) sender).bukkitSender());
