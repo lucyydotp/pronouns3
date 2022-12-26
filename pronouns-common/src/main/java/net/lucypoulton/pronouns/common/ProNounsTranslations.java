@@ -22,7 +22,7 @@ public class ProNounsTranslations {
             for (final var entry : props.entrySet()) {
                 registry.register(
                         (String) entry.getKey(),
-                        Locale.getDefault(),
+                        Locale.US,
                         new MessageFormat((String) entry.getValue())
                 );
             }
