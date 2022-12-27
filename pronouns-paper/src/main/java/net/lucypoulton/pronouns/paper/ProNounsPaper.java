@@ -12,6 +12,15 @@ public final class ProNounsPaper extends JavaPlugin {
         if (!PaperDetector.IS_PAPER) {
             throw new RuntimeException("ProNouns requires Paper to run. Get it at https://papermc.io. The plugin will now disable itself.");
         }
+
+        //noinspection ResultOfMethodCallIgnored
+        getDataFolder().mkdir();
+
         plugin = new ProNouns(new PaperPlatform(this));
+        getServer().getPluginManager().registerEvents(new PlayerEventHandler(this), this);
+    }
+
+    public ProNouns getPlugin() {
+        return plugin;
     }
 }

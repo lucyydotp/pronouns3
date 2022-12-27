@@ -6,6 +6,7 @@ import cloud.commandframework.paper.PaperCommandManager;
 import net.lucypoulton.pronouns.api.PronounStore;
 import net.lucypoulton.pronouns.common.platform.CommandSender;
 import net.lucypoulton.pronouns.common.platform.Platform;
+import net.lucypoulton.pronouns.common.store.FilePronounStore;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -16,9 +17,10 @@ import java.util.UUID;
 public class PaperPlatform implements Platform {
 
     private final CommandManager<CommandSender> manager;
-    private final PronounStore store = new PersistentDataContainerStore();
+    private final PronounStore store; // = new PersistentDataContainerStore();
 
     public PaperPlatform(ProNounsPaper plugin) {
+        store = new FilePronounStore(plugin.getDataFolder().toPath().resolve("pronouns-store.properties"));
         try {
             this.manager = new PaperCommandManager<>(plugin,
                     CommandExecutionCoordinator.simpleCoordinator(),
