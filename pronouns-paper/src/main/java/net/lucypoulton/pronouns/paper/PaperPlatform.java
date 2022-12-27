@@ -3,6 +3,7 @@ package net.lucypoulton.pronouns.paper;
 import cloud.commandframework.CommandManager;
 import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.paper.PaperCommandManager;
+import net.lucypoulton.pronouns.api.PronounStore;
 import net.lucypoulton.pronouns.common.platform.CommandSender;
 import net.lucypoulton.pronouns.common.platform.Platform;
 import org.bukkit.Bukkit;
@@ -15,6 +16,7 @@ import java.util.UUID;
 public class PaperPlatform implements Platform {
 
     private final CommandManager<CommandSender> manager;
+    private final PronounStore store = new PersistentDataContainerStore();
 
     public PaperPlatform(ProNounsPaper plugin) {
         try {
@@ -25,6 +27,11 @@ public class PaperPlatform implements Platform {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public PronounStore store() {
+        return store;
     }
 
     @Override

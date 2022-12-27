@@ -1,5 +1,6 @@
 package net.lucypoulton.pronouns.api;
 
+import net.lucypoulton.pronouns.api.impl.set.BuiltinPronounSet;
 import net.lucypoulton.pronouns.api.impl.set.SimplePronounSet;
 import net.lucypoulton.pronouns.api.impl.set.SpecialPronounSet;
 import net.lucypoulton.pronouns.api.impl.util.StringUtils;
@@ -98,17 +99,17 @@ public interface PronounSet {
         /**
          * The they/them pronoun set. Makes use of the more common plural "themselves" reflexive.
          */
-        public static final PronounSet THEY = PronounSet.from("they", "them", "their", "theirs", "themselves", true);
+        public static final PronounSet THEY = new BuiltinPronounSet("they", "them", "their", "theirs", "themselves", true);
 
         /**
          * The he/him pronoun set.
          */
-        public static final PronounSet HE = PronounSet.from("he", "him", "his", "his", "himself", false);
+        public static final PronounSet HE = new BuiltinPronounSet("he", "him", "his", "his", "himself", false);
 
         /**
          * The she/her pronoun set.
          */
-        public static final PronounSet SHE = PronounSet.from("she", "her", "her", "hers", "herself", false);
+        public static final PronounSet SHE = new BuiltinPronounSet("she", "her", "her", "hers", "herself", false);
 
         /**
          * A special set, proxied to they/them, that indicates any pronouns are acceptable.

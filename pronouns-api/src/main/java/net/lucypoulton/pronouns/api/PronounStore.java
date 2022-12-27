@@ -10,6 +10,8 @@ import java.util.UUID;
  */
 public interface PronounStore {
 
+    List<PronounSet> UNSET_LIST = List.of(PronounSet.Builtins.UNSET);
+
     /**
      * Gets all predefined pronoun sets.
      */
