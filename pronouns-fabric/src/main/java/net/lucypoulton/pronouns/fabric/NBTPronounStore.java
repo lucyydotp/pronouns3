@@ -17,6 +17,7 @@ import java.util.UUID;
 
 /**
  * A store that stores pronoun info as NBT data alongside a world.
+ * TODO: see how this handles unusual world setups
  */
 public class NBTPronounStore extends PersistentState implements PronounStore {
     private static final PronounParser PARSER = new PronounParser(PronounSet.builtins);
