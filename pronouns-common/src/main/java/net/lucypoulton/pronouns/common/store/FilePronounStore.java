@@ -20,13 +20,13 @@ public class FilePronounStore implements CachedPronounStore {
     private static final PronounParser parser = new PronounParser(PronounSet.builtins);
 
     public FilePronounStore(final Path filePath) {
-        this.filePath = filePath;
-        if (!Files.exists(filePath)) {
+        this.filePath = filePath.resolve("pronouns-store.properties");
+        if (!Files.exists(this.filePath)) {
             save();
             return;
         }
         final var properties = new Properties();
-        try (final var inStream = Files.newInputStream(filePath)) {
+        try (final var inStream = Files.newInputStream(this.filePath)) {
             properties.load(inStream);
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -36,10 +36,13 @@ Support for these three platforms is planned but not yet implemented.
 
 # Commands
 
-`/pronouns get [username]` - Gets a player's pronouns, or your own if no username is given.<br/>
-`/pronouns set <pronouns>` - Sets your pronouns.<br/>
-`/pronouns set <pronouns> --player <username>` - Sets another player's pronouns.<br/>
-`/pronouns clear [username` - Clears your pronouns, or your own if no username is given.<br/>
+| Command                                        | Description                                                    |
+|------------------------------------------------|----------------------------------------------------------------|
+| `/pronouns get [username]`                     | Gets a player's pronouns, or your own if no username is given. | 
+| `/pronouns set <pronouns>`                     | Sets your pronouns.                                            |
+| `/pronouns set <pronouns> --player <username>` | Sets another player's pronouns.                                |
+| `/pronouns clear [username]`                   | Clears your pronouns, or your own if no username is given.     |
+| `/pronouns version`                            | Shows the plugin's version.                                    |
 
 # Pronoun stores
 

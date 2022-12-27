@@ -3,13 +3,14 @@ package net.lucypoulton.pronouns.fabric;
 import cloud.commandframework.CommandManager;
 import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.fabric.FabricServerCommandManager;
-import net.lucypoulton.pronouns.api.PronounStore;
+import net.fabricmc.loader.api.FabricLoader;
 import net.lucypoulton.pronouns.common.platform.CommandSender;
 import net.lucypoulton.pronouns.common.platform.Platform;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.Nullable;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -28,12 +29,23 @@ public class FabricPlatform implements Platform {
     }
 
     private Optional<CommandSender> get(@Nullable ServerPlayerEntity entity) {
-        return Optional.ofNullable(entity).map(e -> (CommandSender) e.getCommandSource());
+        return Optional.ofNullable(entity).map(e -> new CommandSourceWrapper(e.getCommandSource()));
     }
 
     @Override
-    public PronounStore store() {
-        return NBTPronounStore.server(server);
+    public String name() {
+        return "Fabric";
+    }
+
+    @Override
+    public String currentVersion() {
+        return FabricLoader.getInstance().getModContainer("pronouns-fabric").orElseThrow()
+                .getMetadata().getVersion().getFriendlyString();
+    }
+
+    @Override
+    public Path dataDir() {
+        return FabricLoader.getInstance().getConfigDir();
     }
 
     @Override
@@ -43,8 +55,9 @@ public class FabricPlatform implements Platform {
 
     @Override
     public Optional<CommandSender> getPlayer(String name) {
-       return get(server.getPlayerManager().getPlayer(name));
+        return get(server.getPlayerManager().getPlayer(name));
     }
+
     @Override
     public Optional<CommandSender> getPlayer(UUID uuid) {
         return get(server.getPlayerManager().getPlayer(uuid));

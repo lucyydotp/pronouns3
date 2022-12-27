@@ -3,24 +3,23 @@ package net.lucypoulton.pronouns.paper;
 import cloud.commandframework.CommandManager;
 import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.paper.PaperCommandManager;
-import net.lucypoulton.pronouns.api.PronounStore;
 import net.lucypoulton.pronouns.common.platform.CommandSender;
 import net.lucypoulton.pronouns.common.platform.Platform;
-import net.lucypoulton.pronouns.common.store.FilePronounStore;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 public class PaperPlatform implements Platform {
 
+    private final ProNounsPaper plugin;
     private final CommandManager<CommandSender> manager;
-    private final PronounStore store; // = new PersistentDataContainerStore();
 
     public PaperPlatform(ProNounsPaper plugin) {
-        store = new FilePronounStore(plugin.getDataFolder().toPath().resolve("pronouns-store.properties"));
+        this.plugin = plugin;
         try {
             this.manager = new PaperCommandManager<>(plugin,
                     CommandExecutionCoordinator.simpleCoordinator(),
@@ -32,8 +31,18 @@ public class PaperPlatform implements Platform {
     }
 
     @Override
-    public PronounStore store() {
-        return store;
+    public String name() {
+        return "Paper";
+    }
+
+    @Override
+    public String currentVersion() {
+        return plugin.getDescription().getVersion();
+    }
+
+    @Override
+    public Path dataDir() {
+        return plugin.getDataFolder().toPath();
     }
 
     @Override
