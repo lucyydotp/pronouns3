@@ -1,4 +1,4 @@
-package net.lucypoulton.pronouns.common;
+package net.lucypoulton.pronouns.common.message;
 
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.translation.TranslationRegistry;

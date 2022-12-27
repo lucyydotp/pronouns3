@@ -4,20 +4,16 @@ import cloud.commandframework.annotations.Argument;
 import cloud.commandframework.annotations.CommandMethod;
 import cloud.commandframework.annotations.Flag;
 import cloud.commandframework.annotations.specifier.FlagYielding;
-import net.kyori.adventure.text.Component;
-import net.lucypoulton.pronouns.api.ProNounsPlugin;
 import net.lucypoulton.pronouns.api.PronounSet;
+import net.lucypoulton.pronouns.common.ProNouns;
 import net.lucypoulton.pronouns.common.platform.CommandSender;
 import net.lucypoulton.pronouns.common.platform.Platform;
 
-import static net.kyori.adventure.text.Component.text;
-import static net.kyori.adventure.text.Component.translatable;
-
 public class SetCommand {
-    private final ProNounsPlugin plugin;
+    private final ProNouns plugin;
     private final Platform platform;
 
-    public SetCommand(ProNounsPlugin plugin, Platform platform) {
+    public SetCommand(ProNouns plugin, Platform platform) {
         this.plugin = plugin;
         this.platform = platform;
     }
@@ -27,27 +23,27 @@ public class SetCommand {
                         @Argument("pronouns") @FlagYielding String value,
                         @Flag(value = "player", suggestions = "player") String targetPlayer
     ) {
+        final var f = plugin.formatter();
         final var target = CommandUtils.getPlayerOrSender(sender, targetPlayer, platform);
         final var player = target.sender();
         if (player.uuid().isEmpty()) {
-            sender.sendMessage(Component.translatable("pronouns.command.noPlayer"));
+            sender.sendMessage(f.translated("pronouns.command.noPlayer"));
             return;
         }
         try {
             final var pronouns = plugin.parser().parse(value);
             plugin.store().set(player.uuid().get(), pronouns);
             sender.sendMessage(
-                    translatable("pronouns.command.set." + (target.isNotSender() ? "other" : "self")).args(
-                            text(PronounSet.format(pronouns)),
-                            text(player.name())
+                    f.translated("pronouns.command.set." + (target.isNotSender() ? "other" : "self"),
+                            PronounSet.format(pronouns),
+                            player.name()
                     )
             );
             return;
         } catch (IllegalArgumentException ignored) {
         }
         sender.sendMessage(
-                translatable("pronouns.command.set.badSet")
-                        .args(text(value))
+                f.translated("pronouns.command.set.badSet", value)
         );
     }
 }
