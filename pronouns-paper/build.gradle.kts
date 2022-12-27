@@ -29,4 +29,7 @@ tasks {
     build {
         dependsOn(shadowJar)
     }
+    processResources {
+        expand("version" to project.version)
+    }
 }

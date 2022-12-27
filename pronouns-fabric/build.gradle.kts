@@ -31,4 +31,8 @@ tasks {
         dependsOn(shadowJar)
         inputFile.set(shadowJar.flatMap { it.archiveFile })
     }
+
+    processResources {
+        expand("version" to project.version)
+    }
 }
