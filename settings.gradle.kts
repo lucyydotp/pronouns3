@@ -17,7 +17,7 @@ dependencyResolutionManagement {
         version("adventure", "4.12.0")
         version("cloud", "1.8.0")
         library("adventure", "net.kyori", "adventure-api").versionRef("adventure")
-        listOf("core", "annotations", "fabric", "paper").forEach {
+        listOf("core", "fabric", "paper").forEach {
             library("cloud.$it", "cloud.commandframework", "cloud-$it").versionRef("cloud")
         }
     }

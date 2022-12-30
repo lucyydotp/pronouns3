@@ -18,4 +18,10 @@ public interface CommandSender extends Audience {
      * A name for this sender.
      */
     String name();
+
+    /**
+     * Whether this sender has a given permission.
+     * @see ProNounsPermission
+     */
+    boolean hasPermission(String permission);
 }

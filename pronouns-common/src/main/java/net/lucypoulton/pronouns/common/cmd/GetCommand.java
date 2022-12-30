@@ -1,14 +1,15 @@
 package net.lucypoulton.pronouns.common.cmd;
 
-import cloud.commandframework.annotations.Argument;
-import cloud.commandframework.annotations.CommandMethod;
+import cloud.commandframework.Command;
+import cloud.commandframework.meta.CommandMeta;
 import net.lucypoulton.pronouns.api.PronounSet;
 import net.lucypoulton.pronouns.common.ProNouns;
 import net.lucypoulton.pronouns.common.platform.CommandSender;
 import net.lucypoulton.pronouns.common.platform.Platform;
+import net.lucypoulton.pronouns.common.platform.ProNounsPermission;
 import org.jetbrains.annotations.Nullable;
 
-public class GetCommand {
+public class GetCommand implements ProNounsCommand {
     private final Platform platform;
     private final ProNouns plugin;
 
@@ -17,8 +18,7 @@ public class GetCommand {
         this.platform = platform;
     }
 
-    @CommandMethod("pronouns|pn get [player]")
-    public void execute(CommandSender sender, @Argument(value = "player", suggestions = "player") @Nullable String target) {
+    public void execute(CommandSender sender, @Nullable String target) {
         final var f = plugin.formatter();
         final var targetCommandSender = CommandUtils.getPlayerOrSender(sender, target, platform);
         final var targetPlayer = targetCommandSender.sender();
@@ -39,5 +39,14 @@ public class GetCommand {
                         targetPlayer.name()
                 )
         );
+    }
+
+    @Override
+    public Command.Builder<CommandSender> build(Command.Builder<CommandSender> builder) {
+        return builder.literal("get")
+                .meta(CommandMeta.DESCRIPTION, CommandUtils.description("get"))
+                .permission(ProNounsPermission.GET.key)
+                .argument(CommandUtils.optionalPlayer("player", platform))
+                .handler(ctx -> execute(ctx.getSender(), ctx.getOrDefault("player", null)));
     }
 }

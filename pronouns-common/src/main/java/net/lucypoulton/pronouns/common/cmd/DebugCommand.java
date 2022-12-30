@@ -1,13 +1,13 @@
 package net.lucypoulton.pronouns.common.cmd;
 
-import cloud.commandframework.annotations.CommandMethod;
-import cloud.commandframework.annotations.Hidden;
+import cloud.commandframework.Command;
+import cloud.commandframework.meta.CommandMeta;
 import net.kyori.adventure.text.Component;
 import net.lucypoulton.pronouns.api.ProNounsPlugin;
 import net.lucypoulton.pronouns.common.platform.CommandSender;
 import net.lucypoulton.pronouns.common.platform.Platform;
 
-public class DebugCommand {
+public class DebugCommand implements ProNounsCommand {
 
     private static final String DEBUG_FORMAT = """
             ProNouns v%s (%s, %s)
@@ -33,15 +33,18 @@ public class DebugCommand {
         return String.join(".", out);
     }
 
-    @Hidden
-    @CommandMethod("pronouns debug")
-    public void execute(CommandSender sender) {
-        sender.sendMessage(Component.text(
-                String.format(DEBUG_FORMAT, platform.currentVersion(), platform.name(), platform.config().updateChannel(),
-                        shortenedClassName(plugin.store().getClass()),
-                        shortenedClassName(platform.config().getClass()),
-                        plugin.store().predefined().get().size()
-                )
-        ));
+
+    @Override
+    public Command.Builder<CommandSender> build(Command.Builder<CommandSender> builder) {
+        return builder.literal("debug")
+                .hidden()
+                .meta(CommandMeta.DESCRIPTION, CommandUtils.description("debug"))
+                .handler(ctx -> ctx.getSender().sendMessage(Component.text(
+                        String.format(DEBUG_FORMAT, platform.currentVersion(), platform.name(), platform.config().updateChannel(),
+                                shortenedClassName(plugin.store().getClass()),
+                                shortenedClassName(platform.config().getClass()),
+                                plugin.store().predefined().get().size()
+                        )
+                )));
     }
 }

@@ -1,7 +1,5 @@
 package net.lucypoulton.pronouns.common;
 
-import cloud.commandframework.annotations.AnnotationParser;
-import cloud.commandframework.meta.SimpleCommandMeta;
 import net.kyori.adventure.translation.GlobalTranslator;
 import net.lucypoulton.pronouns.api.ProNounsPlugin;
 import net.lucypoulton.pronouns.api.PronounStore;
@@ -9,11 +7,11 @@ import net.lucypoulton.pronouns.api.impl.PronounParser;
 import net.lucypoulton.pronouns.common.cmd.*;
 import net.lucypoulton.pronouns.common.message.Formatter;
 import net.lucypoulton.pronouns.common.message.ProNounsTranslations;
-import net.lucypoulton.pronouns.common.platform.CommandSender;
 import net.lucypoulton.pronouns.common.platform.Platform;
 import net.lucypoulton.pronouns.common.store.StoreFactory;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ProNouns implements ProNounsPlugin {
@@ -33,23 +31,22 @@ public class ProNouns implements ProNounsPlugin {
 
         GlobalTranslator.translator().addSource(ProNounsTranslations.registry());
         final var commandManager = platform.commandManager();
-        final var annotationParser = new AnnotationParser<>(
-                commandManager,
-                CommandSender.class,
-                params -> SimpleCommandMeta.empty()
+
+        final var commands = List.of(
+                new GetCommand(this, platform),
+                new SetCommand(this, platform),
+                new ClearCommand(this, platform),
+                new VersionCommand(this, platform),
+                new DebugCommand(this, platform),
+                new UpdateCommand(this),
+                new HelpCommand(this, commandManager)
         );
 
-
-        commandManager.parserRegistry().registerSuggestionProvider("player",
-                (name, ctx) -> platform.listPlayers());
-
-        annotationParser.parse(new GetCommand(this, platform));
-        annotationParser.parse(new SetCommand(this, platform));
-        annotationParser.parse(new ClearCommand(this, platform));
-        annotationParser.parse(new VersionCommand(this, platform));
-        annotationParser.parse(new DebugCommand(this, platform));
-        annotationParser.parse(new UpdateCommand(this));
-//        annotationParser.parse(new HelpCommand(commandManager));
+        for (final var command : commands) {
+            commandManager.command(
+                    commandManager.commandBuilder("pronouns", "pn").apply(command::build)
+            );
+        }
 
         if (platform.config().checkForUpdates()) {
             checker = new UpdateChecker(this, platform);

@@ -1,7 +1,10 @@
 package net.lucypoulton.pronouns.paper;
 
 import net.lucypoulton.pronouns.common.ProNouns;
+import net.lucypoulton.pronouns.common.platform.ProNounsPermission;
 import net.lucypoulton.pronouns.common.store.StoreFactory;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ProNounsPaper extends JavaPlugin {
@@ -21,6 +24,14 @@ public final class ProNounsPaper extends JavaPlugin {
 
         //noinspection ResultOfMethodCallIgnored
         getDataFolder().mkdir();
+
+        for (final var perm: ProNounsPermission.values()) {
+            getServer().getPluginManager().addPermission(new Permission(
+                    perm.key,
+                    perm.description,
+                    perm.defaultLevel > 0 ? PermissionDefault.OP : PermissionDefault.TRUE
+            ));
+        }
 
         plugin = new ProNouns(new PaperPlatform(this));
         plugin.createStore(factory);

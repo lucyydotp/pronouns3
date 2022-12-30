@@ -19,8 +19,6 @@ dependencies {
     modImplementation("me.lucko:fabric-permissions-api:0.2-SNAPSHOT")
     modImplementation(libs.cloud.fabric)
     include(libs.cloud.fabric)
-    modImplementation(libs.cloud.annotations)
-    include(libs.cloud.annotations)
 }
 
 tasks {

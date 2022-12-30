@@ -23,6 +23,11 @@ public record BukkitCommandSenderWrapper(
     }
 
     @Override
+    public boolean hasPermission(String permission) {
+        return bukkitSender.hasPermission(permission);
+    }
+
+    @Override
     public @NotNull Audience audience() {
         return bukkitSender;
     }
