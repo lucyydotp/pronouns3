@@ -12,13 +12,17 @@ import net.lucypoulton.pronouns.common.message.ProNounsTranslations;
 import net.lucypoulton.pronouns.common.platform.CommandSender;
 import net.lucypoulton.pronouns.common.platform.Platform;
 import net.lucypoulton.pronouns.common.store.StoreFactory;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 public class ProNouns implements ProNounsPlugin {
 
     private final PronounParser parser;
     private final Platform platform;
     private PronounStore store;
-    private final UpdateChecker checker;
+    private @Nullable
+    final UpdateChecker checker;
 
     private final Formatter formatter = new Formatter();
 
@@ -47,7 +51,13 @@ public class ProNouns implements ProNounsPlugin {
         annotationParser.parse(new UpdateCommand(this));
 //        annotationParser.parse(new HelpCommand(commandManager));
 
-        this.checker = new UpdateChecker(this, platform);
+        if (platform.config().checkForUpdates()) {
+            checker = new UpdateChecker(this, platform);
+            checker.checkForUpdates(false);
+        } else {
+            checker = null;
+            platform.logger().warning(ProNounsTranslations.translate("pronouns.update.disabled"));
+        }
     }
 
     public void createStore(StoreFactory store) {
@@ -68,7 +78,7 @@ public class ProNouns implements ProNounsPlugin {
         return formatter;
     }
 
-    public UpdateChecker updateChecker() {
-        return checker;
+    public Optional<UpdateChecker> updateChecker() {
+        return Optional.ofNullable(checker);
     }
 }

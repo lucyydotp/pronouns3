@@ -16,9 +16,11 @@ public class UpdateCommand {
 
     @CommandMethod("pronouns update")
     public void executeShow(CommandSender sender, @Flag("force") boolean force) {
-        if (force || plugin.updateChecker().availableUpdate().isEmpty()) {
-            sender.sendMessage(Component.translatable("pronouns.command.update"));
-        }
-        plugin.updateChecker().checkForUpdates(force);
+        plugin.updateChecker().ifPresentOrElse(checker -> {
+            if (force || checker.availableUpdate().isEmpty()) {
+                sender.sendMessage(Component.translatable("pronouns.command.update"));
+            }
+            checker.checkForUpdates(force);
+        }, () -> sender.sendMessage(Component.translatable("pronouns.update.disabled")));
     }
 }

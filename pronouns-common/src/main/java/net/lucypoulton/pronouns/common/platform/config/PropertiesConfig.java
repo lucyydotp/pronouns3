@@ -34,7 +34,7 @@ public class PropertiesConfig implements Config {
     }
 
     private PropertiesConfig(Properties props) {
-        this.checkForUpdates = getValue(props, "checkForUpdates", "true").equals("false");
+        this.checkForUpdates = !getValue(props, "checkForUpdates", "true").equals("false");
         final var channelString = getValue(props, "updateChannel", "release");
         this.updateChannel = switch (channelString.trim().toLowerCase(Locale.ROOT)) {
             case "alpha" -> Channel.ALPHA;

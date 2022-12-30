@@ -34,4 +34,9 @@ public class ProNounsTranslations {
     public static TranslationRegistry registry() {
         return registry;
     }
+
+    public static String translate(String key, Object... args) {
+        final var format =  registry().translate(key, Locale.ROOT);
+        return format != null ? format.format(args) : key;
+    }
 }
