@@ -10,9 +10,9 @@ import net.lucypoulton.pronouns.common.platform.Platform;
 public class DebugCommand {
 
     private static final String DEBUG_FORMAT = """
-            ProNouns v%s
-            Platform %s (%s)
+            ProNouns v%s (%s, %s)
             Store %s
+            Config %s
             %s predefined sets""";
 
     private final ProNounsPlugin plugin;
@@ -23,13 +23,23 @@ public class DebugCommand {
         this.platform = platform;
     }
 
+    private static String shortenedClassName(Class<?> clazz) {
+        final var split = clazz.getName().split("\\.");
+        if (split.length <= 3) return clazz.getName();
+        final var out = new String[split.length];
+        for (int i = 0; i < split.length; i++) {
+            out[i] = i >= 3 ? split[i] : split[i].substring(0, 1);
+        }
+        return String.join(".", out);
+    }
+
     @Hidden
     @CommandMethod("pronouns debug")
     public void execute(CommandSender sender) {
         sender.sendMessage(Component.text(
-                String.format(DEBUG_FORMAT, platform.currentVersion(),
-                        platform.name(), platform.getClass().getName(),
-                        plugin.store().getClass().getName(),
+                String.format(DEBUG_FORMAT, platform.currentVersion(), platform.name(), platform.config().updateChannel(),
+                        shortenedClassName(plugin.store().getClass()),
+                        shortenedClassName(platform.config().getClass()),
                         plugin.store().predefined().get().size()
                 )
         ));

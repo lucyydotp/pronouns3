@@ -3,17 +3,23 @@ package net.lucypoulton.pronouns.fabric;
 import cloud.commandframework.CommandManager;
 import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.fabric.FabricServerCommandManager;
+import me.lucko.fabric.api.permissions.v0.Permissions;
 import net.fabricmc.loader.api.FabricLoader;
+import net.kyori.adventure.text.Component;
 import net.lucypoulton.pronouns.common.platform.CommandSender;
 import net.lucypoulton.pronouns.common.platform.Platform;
+import net.lucypoulton.pronouns.common.platform.config.Config;
+import net.lucypoulton.pronouns.common.platform.config.PropertiesConfig;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 public class FabricPlatform implements Platform {
 
@@ -23,6 +29,16 @@ public class FabricPlatform implements Platform {
             CommandSourceWrapper::new,
             source -> ((CommandSourceWrapper) source).source()
     );
+
+    private final Config config;
+
+    public FabricPlatform() {
+        try {
+            config = PropertiesConfig.load(dataDir().resolve("pronouns.cfg"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void setServer(MinecraftServer server) {
         this.server = server;
@@ -46,6 +62,25 @@ public class FabricPlatform implements Platform {
     @Override
     public Path dataDir() {
         return FabricLoader.getInstance().getConfigDir();
+    }
+
+    @Override
+    public Config config() {
+        return config;
+    }
+
+    @Override
+    public Logger logger() {
+        return Logger.getLogger("ProNouns");
+    }
+
+    @Override
+    public void broadcast(Component component, String permission) {
+        server.getCommandSource().sendMessage(component);
+        for (final var player : server.getPlayerManager().getPlayerList()) {
+            if (Permissions.check(player, permission)) player.sendMessage(component);
+        }
+
     }
 
     @Override

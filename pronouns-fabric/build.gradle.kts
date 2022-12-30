@@ -15,6 +15,8 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api:fabric-api:0.69.1+1.19.3")
     shadow(project(":pronouns-common"))
     modImplementation(include("net.kyori:adventure-platform-fabric:5.6.0")!!)
+    // included in cloud fabric so no jij needed
+    modImplementation("me.lucko:fabric-permissions-api:0.2-SNAPSHOT")
     modImplementation(libs.cloud.fabric)
     include(libs.cloud.fabric)
     modImplementation(libs.cloud.annotations)

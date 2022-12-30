@@ -18,6 +18,7 @@ public class ProNouns implements ProNounsPlugin {
     private final PronounParser parser;
     private final Platform platform;
     private PronounStore store;
+    private final UpdateChecker checker;
 
     private final Formatter formatter = new Formatter();
 
@@ -43,7 +44,10 @@ public class ProNouns implements ProNounsPlugin {
         annotationParser.parse(new ClearCommand(this, platform));
         annotationParser.parse(new VersionCommand(this, platform));
         annotationParser.parse(new DebugCommand(this, platform));
-        annotationParser.parse(new HelpCommand(commandManager));
+        annotationParser.parse(new UpdateCommand(this));
+//        annotationParser.parse(new HelpCommand(commandManager));
+
+        this.checker = new UpdateChecker(this, platform);
     }
 
     public void createStore(StoreFactory store) {
@@ -62,5 +66,9 @@ public class ProNouns implements ProNounsPlugin {
 
     public Formatter formatter() {
         return formatter;
+    }
+
+    public UpdateChecker updateChecker() {
+        return checker;
     }
 }

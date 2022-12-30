@@ -3,8 +3,11 @@ package net.lucypoulton.pronouns.paper;
 import cloud.commandframework.CommandManager;
 import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.paper.PaperCommandManager;
+import net.kyori.adventure.text.Component;
 import net.lucypoulton.pronouns.common.platform.CommandSender;
 import net.lucypoulton.pronouns.common.platform.Platform;
+import net.lucypoulton.pronouns.common.platform.config.Config;
+import net.lucypoulton.pronouns.common.platform.config.PropertiesConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -12,11 +15,13 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 public class PaperPlatform implements Platform {
 
     private final ProNounsPaper plugin;
     private final CommandManager<CommandSender> manager;
+    private final Config config;
 
     public PaperPlatform(ProNounsPaper plugin) {
         this.plugin = plugin;
@@ -25,6 +30,7 @@ public class PaperPlatform implements Platform {
                     CommandExecutionCoordinator.simpleCoordinator(),
                     BukkitCommandSenderWrapper::new,
                     sender -> ((BukkitCommandSenderWrapper) sender).bukkitSender());
+            this.config = PropertiesConfig.load(plugin.getDataFolder().toPath().resolve("pronouns.cfg"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -46,6 +52,16 @@ public class PaperPlatform implements Platform {
     }
 
     @Override
+    public Logger logger() {
+        return plugin.getLogger();
+    }
+
+    @Override
+    public void broadcast(Component component, String permission) {
+        Bukkit.broadcast(component, permission);
+    }
+
+    @Override
     public CommandManager<CommandSender> commandManager() {
         return manager;
     }
@@ -63,5 +79,10 @@ public class PaperPlatform implements Platform {
     @Override
     public List<String> listPlayers() {
         return Bukkit.getOnlinePlayers().stream().map(Player::getName).toList();
+    }
+
+    @Override
+    public Config config() {
+        return config;
     }
 }

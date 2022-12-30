@@ -4,3 +4,8 @@ main: net.lucypoulton.pronouns.paper.ProNounsPaper
 api-version: 1.19
 authors: [lucyydotp]
 website: https://lucypoulton.net
+
+permissions:
+  pronouns.update:
+    description: "Informed when an update is available, and gives access to /pronouns update to manually update"
+    default: op

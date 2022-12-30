@@ -14,4 +14,5 @@ dependencies {
     compileOnlyApi(libs.cloud.annotations)
     annotationProcessor(libs.cloud.annotations)
     compileOnlyApi(libs.adventure)
+    implementation("com.google.code.gson:gson:2.10")
 }
