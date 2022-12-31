@@ -7,6 +7,7 @@ import net.lucypoulton.pronouns.api.impl.PronounParser;
 import net.lucypoulton.pronouns.common.cmd.*;
 import net.lucypoulton.pronouns.common.message.Formatter;
 import net.lucypoulton.pronouns.common.message.ProNounsTranslations;
+import net.lucypoulton.pronouns.common.placeholder.Placeholders;
 import net.lucypoulton.pronouns.common.platform.Platform;
 import net.lucypoulton.pronouns.common.store.StoreFactory;
 import org.jetbrains.annotations.Nullable;
@@ -18,6 +19,7 @@ public class ProNouns implements ProNounsPlugin {
 
     private final PronounParser parser;
     private final Platform platform;
+    private final Placeholders placeholders = new Placeholders(this);
     private PronounStore store;
     private @Nullable
     final UpdateChecker checker;
@@ -77,5 +79,9 @@ public class ProNouns implements ProNounsPlugin {
 
     public Optional<UpdateChecker> updateChecker() {
         return Optional.ofNullable(checker);
+    }
+
+    public Placeholders placeholders() {
+        return placeholders;
     }
 }
