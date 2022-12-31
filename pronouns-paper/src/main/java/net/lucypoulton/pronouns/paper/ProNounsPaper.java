@@ -3,6 +3,7 @@ package net.lucypoulton.pronouns.paper;
 import net.lucypoulton.pronouns.common.ProNouns;
 import net.lucypoulton.pronouns.common.platform.ProNounsPermission;
 import net.lucypoulton.pronouns.common.store.StoreFactory;
+import org.bukkit.Bukkit;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -10,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class ProNounsPaper extends JavaPlugin {
 
     private static final StoreFactory factory = new StoreFactory();
+
     static {
         factory.register("nbt", PersistentDataContainerStore::new);
     }
@@ -25,7 +27,7 @@ public final class ProNounsPaper extends JavaPlugin {
         //noinspection ResultOfMethodCallIgnored
         getDataFolder().mkdir();
 
-        for (final var perm: ProNounsPermission.values()) {
+        for (final var perm : ProNounsPermission.values()) {
             getServer().getPluginManager().addPermission(new Permission(
                     perm.key,
                     perm.description,
@@ -33,9 +35,15 @@ public final class ProNounsPaper extends JavaPlugin {
             ));
         }
 
-        plugin = new ProNouns(new PaperPlatform(this));
+        final var platform = new PaperPlatform(this);
+        plugin = new ProNouns(platform);
         plugin.createStore(factory);
         getServer().getPluginManager().registerEvents(new PlayerEventHandler(this), this);
+
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            getLogger().info("Registering PlaceholderAPI hook.");
+            new PlaceholderAPIHook(plugin, platform).register();
+        }
     }
 
     public ProNouns getPlugin() {

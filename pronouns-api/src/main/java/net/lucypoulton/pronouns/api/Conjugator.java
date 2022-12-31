@@ -32,6 +32,6 @@ public enum Conjugator {
     }
 
     public String conjugate(boolean isPlural) {
-        return isPlural ? singular : plural;
+        return isPlural ? plural : singular;
     }
 }

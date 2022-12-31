@@ -26,4 +26,10 @@ public record CommandSourceWrapper(ServerCommandSource source) implements Comman
     public String name() {
         return source.getName();
     }
+
+    // FIXME
+    @Override
+    public boolean hasPermission(String permission) {
+        return false;
+    }
 }

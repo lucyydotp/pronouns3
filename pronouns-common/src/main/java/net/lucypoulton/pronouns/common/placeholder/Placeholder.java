@@ -5,7 +5,7 @@ import net.lucypoulton.pronouns.common.platform.CommandSender;
 import java.util.function.BiFunction;
 
 public record Placeholder(String name, BiFunction<CommandSender, String, Result> function) {
-    public record Result(boolean success, String of) {
+    public record Result(boolean success, String message) {
         static Result fail(String value) {
             return new Result(false, value);
         }

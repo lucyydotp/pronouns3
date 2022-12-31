@@ -24,4 +24,21 @@ public interface CommandSender extends Audience {
      * @see ProNounsPermission
      */
     boolean hasPermission(String permission);
+
+    CommandSender EMPTY = new CommandSender() {
+        @Override
+        public Optional<UUID> uuid() {
+            return Optional.empty();
+        }
+
+        @Override
+        public String name() {
+            return "[empty]";
+        }
+
+        @Override
+        public boolean hasPermission(String permission) {
+            return false;
+        }
+    };
 }

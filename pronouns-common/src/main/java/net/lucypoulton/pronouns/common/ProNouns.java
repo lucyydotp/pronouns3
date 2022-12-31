@@ -28,7 +28,6 @@ public class ProNouns implements ProNounsPlugin {
 
     public ProNouns(Platform platform) {
         this.platform = platform;
-
         this.parser = new PronounParser(() -> store.predefined().get());
 
         GlobalTranslator.translator().addSource(ProNounsTranslations.registry());
@@ -50,12 +49,15 @@ public class ProNouns implements ProNounsPlugin {
             );
         }
 
-        if (platform.config().checkForUpdates()) {
+        final var isDevelopmentVersion = platform.currentVersion().endsWith("-SNAPSHOT");
+        if (!isDevelopmentVersion && platform.config().checkForUpdates()) {
             checker = new UpdateChecker(this, platform);
             checker.checkForUpdates(false);
         } else {
             checker = null;
-            platform.logger().warning(ProNounsTranslations.translate("pronouns.update.disabled"));
+            platform.logger().warning(isDevelopmentVersion ?
+                    "Development version " + platform.currentVersion() + ", disabling update checker." :
+                    ProNounsTranslations.translate("pronouns.update.disabled"));
         }
     }
 
