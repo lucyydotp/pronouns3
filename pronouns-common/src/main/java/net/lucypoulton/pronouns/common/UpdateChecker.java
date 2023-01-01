@@ -26,6 +26,11 @@ public class UpdateChecker {
         public UpdateCheckException(String s) {
             super(s);
         }
+
+        @Override
+        public String toString() {
+            return getMessage();
+        }
     }
 
     public enum Channel {
@@ -128,18 +133,18 @@ public class UpdateChecker {
                 .GET()
                 .build();
         client.sendAsync(req, HttpResponse.BodyHandlers.ofString())
-                // fixme - exception handling may not work how i expect. if it doesn't then see thenCompose
                 .thenApply(r -> {
                     if (r.statusCode() / 100 != 2) {
                         // something went wrong
-                        throw new UpdateCheckException("Failed to check for updates: " + r.statusCode());
+                        throw new UpdateCheckException("HTTP " + r.statusCode() + " " + uri);
                     }
                     return JsonParser.parseString(r.body()).getAsJsonArray();
                 })
                 .thenApply(this::handle)
                 .thenAccept(this::broadcast)
                 .exceptionally(ex -> {
-                    platform.logger().warning(ex.toString());
+                    platform.logger().warning("Failed to check for updates: " +
+                            (ex.getCause() == null ? ex : ex.getCause()).toString());
                     return null;
                 });
     }
