@@ -12,4 +12,9 @@ public interface Config {
     boolean checkForUpdates();
 
     UpdateChecker.Channel updateChannel();
+
+    /**
+     * A MiniMessage string to format accents.
+     */
+    String accent();
 }

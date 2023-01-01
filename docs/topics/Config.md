@@ -10,6 +10,16 @@ For Fabric, the config file is at <path>config/pronouns.cfg</path>.
 </tab>
 </tabs>
 
+## Formatting
+
+> ProNouns makes frequent use of MiniMessage for formatting configuration. 
+> See <https://docs.adventure.kyori.net/minimessage/format.html>.
+
+accent
+: A MiniMessage tag that prefixes accent text. Defaults to `<gradient:#fa9efa:#9dacfa>`.
+
+## Update checking
+
 checkForUpdates
 : Whether to check for updates. Defaults to `true`.
 

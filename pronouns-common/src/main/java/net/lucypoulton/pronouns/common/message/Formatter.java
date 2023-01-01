@@ -1,32 +1,38 @@
 package net.lucypoulton.pronouns.common.message;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import net.lucypoulton.pronouns.common.platform.Platform;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Locale;
+
 
 // TODO - pull this out to config;
 public class Formatter {
+    private final MiniMessage minimessage;
+    private final Component prefix;
 
-    private static final TextColor ACCENT = TextColor.color(0xffaaff);
-    private static final TextColor GREY = TextColor.color(0x777777);
+    public Formatter(final Platform platform) {
+        minimessage = MiniMessage.builder()
+                .tags(TagResolver.resolver(
+                                Placeholder.parsed("main", "<reset>"),
+                                Placeholder.parsed("accent", platform.config().accent()),
+                                TagResolver.standard()
+                        )
+                ).build();
 
-    private static final Component PREFIX = Component.empty()
-            .append(Component.text("Pronouns").color(ACCENT))
-            .append(Component.text(" » ").color(GREY));
-
-    public Component accent(String content) {
-        return Component.text(content).color(ACCENT);
+        prefix = minimessage.deserialize("<accent>Pronouns<gray> » ");
     }
 
-    public List<Component> accent(String... content) {
-        return Arrays.stream(content)
-                .map(this::accent)
-                .toList();
+    public Component accent(String content) {
+        return minimessage.deserialize("<accent>" + content);
     }
 
     public Component translated(String key, String... args) {
-        return PREFIX.append(Component.translatable(key, accent(args)));
+        final var entry = ProNounsTranslations.registry().translate(key, Locale.ROOT);
+        if (entry == null) return Component.translatable(key);
+        return prefix.append(minimessage.deserialize(entry.format(args)));
     }
 }

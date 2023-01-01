@@ -24,10 +24,11 @@ public class ProNouns implements ProNounsPlugin {
     private @Nullable
     final UpdateChecker checker;
 
-    private final Formatter formatter = new Formatter();
+    private final Formatter formatter;
 
     public ProNouns(Platform platform) {
         this.platform = platform;
+        this.formatter = new Formatter(platform);
         this.parser = new PronounParser(() -> store.predefined().get());
 
         GlobalTranslator.translator().addSource(ProNounsTranslations.registry());

@@ -28,6 +28,8 @@ public class PropertiesConfig implements Config {
     private final boolean checkForUpdates;
     private final Channel updateChannel;
 
+    private final String accent;
+
     private String getValue(Properties properties, String key, String defaultValue) {
         final var out = properties.getOrDefault(key, defaultValue);
         if (out == null) throw new InvalidConfigurationException("Missing required value " + key);
@@ -46,6 +48,7 @@ public class PropertiesConfig implements Config {
                 yield Channel.RELEASE;
             }
         };
+        this.accent = getValue(props, "accent", "<gradient:#fa9efa:#9dacfa>");
     }
 
     @Override
@@ -56,5 +59,10 @@ public class PropertiesConfig implements Config {
     @Override
     public Channel updateChannel() {
         return updateChannel;
+    }
+
+    @Override
+    public String accent() {
+        return accent;
     }
 }
