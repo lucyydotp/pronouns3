@@ -15,7 +15,7 @@ public class PronounParser {
 	}
 
 	public List<PronounSet> parse(String input) {
-		final var split = input.split("/");
+		final var split = input.split("[/ ]");
 		final var out = new LinkedHashSet<PronounSet>();
 		final var predefined = store.get();
 		var queuePoint = 0;
