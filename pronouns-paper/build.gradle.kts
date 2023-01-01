@@ -40,5 +40,5 @@ tasks {
 modrinth {
     gameVersions.add(minecraftVersion)
     loaders.add("paper")
-    versionName.set("$versionName for Paper")
+    versionName.set("$version for Paper")
 }

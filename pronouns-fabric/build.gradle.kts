@@ -41,5 +41,6 @@ tasks {
 }
 
 modrinth {
-    versionName.set("$versionName for Fabric")
+    versionName.set("$version for Fabric")
+    uploadFile.set(tasks.remapJar.get())
 }
