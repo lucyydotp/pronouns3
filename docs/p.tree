@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE instance-profile
+        SYSTEM "https://helpserver.labs.jb.gg/help/schemas/mvp/product-profile.dtd">
+
+<instance-profile id="p"
+                 name="pronouns"
+                 start-page="getting-started.md">
+
+    <toc-element topic="getting-started.md"/>
+</instance-profile>

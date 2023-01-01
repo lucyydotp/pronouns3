@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ihp SYSTEM "https://helpserver.labs.jb.gg/help/schemas/mvp/ihp.dtd">
+
+<ihp version="2.0">
+    <categories src="c.list"/>
+    <vars src="v.list"/>
+    <instance src="p.tree" web-path="/p/" version="3.0.0-SNAPSHOT"/>
+    <topics dir="topics"/>
+    <images dir="images" version="3.0.0-SNAPSHOT"/>
+</ihp>

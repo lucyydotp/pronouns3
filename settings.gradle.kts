@@ -16,7 +16,9 @@ dependencyResolutionManagement {
     versionCatalogs.create("libs") {
         version("adventure", "4.12.0")
         version("cloud", "1.8.0")
-        library("adventure", "net.kyori", "adventure-api").versionRef("adventure")
+        listOf("api", "text-minimessage").forEach {
+            library("adventure.$it", "net.kyori", "adventure-$it").versionRef("adventure")
+        }
         listOf("core", "fabric", "paper").forEach {
             library("cloud.$it", "cloud.commandframework", "cloud-$it").versionRef("cloud")
         }
