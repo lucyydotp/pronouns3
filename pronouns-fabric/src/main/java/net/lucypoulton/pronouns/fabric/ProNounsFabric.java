@@ -1,24 +1,39 @@
 package net.lucypoulton.pronouns.fabric;
 
+import eu.pb4.placeholders.api.PlaceholderResult;
+import eu.pb4.placeholders.api.Placeholders;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
-import net.lucypoulton.pronouns.api.PronounStore;
 import net.lucypoulton.pronouns.common.ProNouns;
+import net.lucypoulton.pronouns.common.platform.CommandSender;
 import net.lucypoulton.pronouns.common.store.CachedPronounStore;
-import net.lucypoulton.pronouns.common.store.InMemoryPronounStore;
 import net.lucypoulton.pronouns.common.store.StoreFactory;
+import net.minecraft.util.Identifier;
 
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class ProNounsFabric implements ModInitializer {
-
-    private final PronounStore store = new InMemoryPronounStore();
-
     @Override
     public void onInitialize() {
         final var platform = new FabricPlatform();
         final var plugin = new ProNouns(platform);
+
+        for (final var placeholder : plugin.placeholders().placeholders()) {
+            Placeholders.register(new Identifier("pronouns", placeholder.name()),
+                    (context, argument) -> {
+                final var player = Optional.ofNullable(context.player())
+                        .flatMap(s -> platform.getPlayer(s.getUuid()))
+                        .orElse(CommandSender.EMPTY);
+
+                        final var result = placeholder.function().apply(player, argument);
+                        return result.success() ?
+                                PlaceholderResult.value(result.message()) :
+                                PlaceholderResult.invalid(result.message());
+                    }
+            );
+        }
 
         ServerLifecycleEvents.SERVER_STARTED.register(server -> {
             platform.setServer(server);

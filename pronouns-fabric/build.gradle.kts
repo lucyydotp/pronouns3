@@ -6,6 +6,7 @@ plugins {
 
 repositories {
     maven("https://oss.sonatype.org/content/repositories/snapshots")
+    maven("https://maven.nucleoid.xyz/")
 }
 
 dependencies {
@@ -19,6 +20,7 @@ dependencies {
     modImplementation("me.lucko:fabric-permissions-api:0.2-SNAPSHOT")
     modImplementation(libs.cloud.fabric)
     include(libs.cloud.fabric)
+    modImplementation(include("eu.pb4:placeholder-api:2.0.0-pre.2+1.19.3")!!)
 }
 
 tasks {
