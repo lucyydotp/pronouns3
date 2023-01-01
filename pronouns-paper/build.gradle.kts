@@ -2,6 +2,7 @@ plugins {
     java
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("pronouns.conventions")
+    id("pronouns.publishable")
 }
 
 repositories {
@@ -11,9 +12,10 @@ repositories {
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi")
 }
 
+val minecraftVersion = "1.19.3"
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:$minecraftVersion-R0.1-SNAPSHOT")
     shadow(project(":pronouns-common"))
     shadow(libs.cloud.paper)
     compileOnly("me.clip:placeholderapi:2.11.2")
@@ -33,4 +35,10 @@ tasks {
     processResources {
         expand("version" to project.version)
     }
+}
+
+modrinth {
+    gameVersions.add(minecraftVersion)
+    loaders.add("paper")
+    versionName.set("$versionName for Paper")
 }

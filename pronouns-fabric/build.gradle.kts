@@ -2,6 +2,7 @@ plugins {
     id("fabric-loom") version "1.0-SNAPSHOT"
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("pronouns.conventions")
+    id("pronouns.publishable")
 }
 
 repositories {
@@ -37,4 +38,8 @@ tasks {
     processResources {
         expand("version" to project.version)
     }
+}
+
+modrinth {
+    versionName.set("$versionName for Fabric")
 }
