@@ -30,7 +30,6 @@ public class PronounParser {
 			if (i - queuePoint == 4){
 				final var last = split[queuePoint+4];
 				final var isPlural = last.endsWith(":p");
-				// TODO - parse
 				out.add(new SimplePronounSet(
 						split[queuePoint],
 						split[queuePoint+1],

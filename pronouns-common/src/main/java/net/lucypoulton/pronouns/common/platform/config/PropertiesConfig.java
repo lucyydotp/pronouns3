@@ -7,10 +7,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Locale;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 public class PropertiesConfig implements Config {
 
-    public static PropertiesConfig load(Path path) throws IOException {
+    public static PropertiesConfig load(Path path, Logger logger) throws IOException {
         if (!Files.exists(path)) {
             try (final var config = PropertiesConfig.class.getResourceAsStream("/pronouns-default.cfg")) {
                 assert config != null;
@@ -20,7 +21,7 @@ public class PropertiesConfig implements Config {
         try (final var file = Files.newInputStream(path)) {
             final var props = new Properties();
             props.load(file);
-            return new PropertiesConfig(props);
+            return new PropertiesConfig(props, logger);
         }
     }
 
@@ -33,14 +34,17 @@ public class PropertiesConfig implements Config {
         return (String) out;
     }
 
-    private PropertiesConfig(Properties props) {
+    private PropertiesConfig(Properties props, Logger logger) {
         this.checkForUpdates = !getValue(props, "checkForUpdates", "true").equals("false");
         final var channelString = getValue(props, "updateChannel", "release");
         this.updateChannel = switch (channelString.trim().toLowerCase(Locale.ROOT)) {
             case "alpha" -> Channel.ALPHA;
             case "beta" -> Channel.BETA;
-            // todo - warn on unknown value
-            default -> Channel.RELEASE;
+            case "release" -> Channel.RELEASE;
+            default -> {
+                logger.warning("Unknown update channel " + channelString + ", falling back to release.");
+                yield Channel.RELEASE;
+            }
         };
     }
 

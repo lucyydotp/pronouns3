@@ -30,7 +30,7 @@ public class PaperPlatform implements Platform {
                     CommandExecutionCoordinator.simpleCoordinator(),
                     BukkitCommandSenderWrapper::new,
                     sender -> ((BukkitCommandSenderWrapper) sender).bukkitSender());
-            this.config = PropertiesConfig.load(plugin.getDataFolder().toPath().resolve("pronouns.cfg"));
+            this.config = PropertiesConfig.load(plugin.getDataFolder().toPath().resolve("pronouns.cfg"), logger());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
