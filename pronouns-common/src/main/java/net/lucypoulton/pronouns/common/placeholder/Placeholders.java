@@ -28,6 +28,12 @@ public class Placeholders {
                 .orElseGet(() -> Result.fail("Unknown verb " + value));
     });
 
+    public final Placeholder conjugate = forPronoun("conj", (set, value) -> {
+        final var split = value.split("_", 2);
+        if (split.length == 1) return Result.fail("Missing options for conjugation");
+        return Result.of(split[set.plural() ? 1 : 0]);
+    });
+
     private Placeholder forPronoun(String name, BiFunction<PronounSet, String, Result> value) {
         return new Placeholder(name, ((sender, s) -> {
             if (sender.uuid().isEmpty()) return Result.fail("No player");
@@ -45,6 +51,6 @@ public class Placeholders {
     }
 
     public Set<Placeholder> placeholders() {
-        return Set.of(subjective, objective, possessiveAdj, possessive, reflexive, pronouns, all, verb);
+        return Set.of(subjective, objective, possessiveAdj, possessive, reflexive, pronouns, all, verb, conjugate);
     }
 }

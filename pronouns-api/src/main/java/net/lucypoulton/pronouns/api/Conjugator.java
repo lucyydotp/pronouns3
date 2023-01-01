@@ -19,6 +19,7 @@ package net.lucypoulton.pronouns.api;
  */
 public enum Conjugator {
     BE("is", "are"),
+    BE_CONTRACTED("'s", "'re"),
     HAVE("has", "have"),
     DO("does", "do"),
     GO("goes", "go");
