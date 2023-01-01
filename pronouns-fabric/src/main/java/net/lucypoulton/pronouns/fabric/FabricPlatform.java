@@ -24,6 +24,10 @@ import java.util.logging.Logger;
 public class FabricPlatform implements Platform {
 
     private MinecraftServer server;
+
+    /* FIXME - cloud fabric currently does not have a way to customise permission checking
+        so it falls back to op, which is not what we need
+     */
     private final CommandManager<CommandSender> manager = new FabricServerCommandManager<>(
             CommandExecutionCoordinator.simpleCoordinator(),
             CommandSourceWrapper::new,
