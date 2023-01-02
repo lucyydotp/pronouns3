@@ -23,8 +23,7 @@ public class ProNouns implements ProNounsPlugin {
     private PronounStore store;
     private @Nullable
     final UpdateChecker checker;
-
-    private final Formatter formatter;
+    private Formatter formatter;
 
     public ProNouns(Platform platform) {
         this.platform = platform;
@@ -41,7 +40,8 @@ public class ProNouns implements ProNounsPlugin {
                 new VersionCommand(this, platform),
                 new DebugCommand(this, platform),
                 new UpdateCommand(this),
-                new HelpCommand(this, commandManager)
+                new HelpCommand(this, commandManager),
+                new ReloadCommand(this)
         );
 
         for (final var command : commands) {
@@ -64,6 +64,11 @@ public class ProNouns implements ProNounsPlugin {
 
     public void createStore(StoreFactory store) {
         this.store = store.create("nbt", platform);
+    }
+
+    public void reload() {
+        platform.config().reload();
+        this.formatter = new Formatter(platform);
     }
 
     @Override

@@ -17,7 +17,11 @@ public enum ProNounsPermission {
             4),
     DEBUG("pronouns.debug",
             "Access to /pn debug",
-            4);
+            4),
+
+    RELOAD("pronouns.reload",
+                   "Access to /pn reload",
+                   4);
 
     /**
      * This permission's key.
@@ -31,9 +35,11 @@ public enum ProNounsPermission {
 
     /**
      * This permission's default level. These correspond to native Minecraft permission levels.
-     *  @see <a href="https://minecraft.fandom.com/wiki/Permission_level#Java_Edition">Permission levels on MC Fandom</a>
+     *
+     * @see <a href="https://minecraft.fandom.com/wiki/Permission_level#Java_Edition">Permission levels on MC Fandom</a>
      */
     public final int defaultLevel;
+
     ProNounsPermission(final String key, final String description, final int value) {
         this.key = key;
         this.description = description;

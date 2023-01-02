@@ -7,9 +7,9 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.lucypoulton.pronouns.common.platform.Platform;
 
 import java.util.Locale;
+import java.util.logging.Logger;
 
 
-// TODO - pull this out to config;
 public class Formatter {
     private final MiniMessage minimessage;
     private final Component prefix;
@@ -17,8 +17,8 @@ public class Formatter {
     public Formatter(final Platform platform) {
         minimessage = MiniMessage.builder()
                 .tags(TagResolver.resolver(
-                                Placeholder.parsed("main", "<reset>"),
-                                Placeholder.parsed("accent", platform.config().accent()),
+                                Placeholder.parsed("main", "<reset>" + platform.config().main()),
+                                Placeholder.parsed("accent", "<reset>" + platform.config().accent()),
                                 TagResolver.standard()
                         )
                 ).build();
@@ -31,8 +31,15 @@ public class Formatter {
     }
 
     public Component translated(String key, String... args) {
+        return translated(key, true, args);
+    }
+
+    public Component translated(String key, boolean includePrefix, String... args) {
         final var entry = ProNounsTranslations.registry().translate(key, Locale.ROOT);
         if (entry == null) return Component.translatable(key);
-        return prefix.append(minimessage.deserialize(entry.format(args)));
+        final var str = "<main>" + entry.format(args);
+        Logger.getLogger("pronouns").info(str);
+        final var out = minimessage.deserialize(str);
+        return includePrefix ? prefix.append(out) : out;
     }
 }

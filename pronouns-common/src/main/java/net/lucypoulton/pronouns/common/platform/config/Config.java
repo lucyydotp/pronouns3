@@ -14,7 +14,14 @@ public interface Config {
     UpdateChecker.Channel updateChannel();
 
     /**
-     * A MiniMessage string to format accents.
+     * A MiniMessage string that prefixes non-accent text.
+     */
+    String main();
+
+    /**
+     * A MiniMessage string that prefixes accent text.
      */
     String accent();
+
+    void reload();
 }

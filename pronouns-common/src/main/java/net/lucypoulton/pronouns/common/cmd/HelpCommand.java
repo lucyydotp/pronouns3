@@ -7,9 +7,6 @@ import cloud.commandframework.arguments.StaticArgument;
 import cloud.commandframework.arguments.standard.StringArgument;
 import cloud.commandframework.meta.CommandMeta;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.format.TextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 import net.lucypoulton.pronouns.common.ProNouns;
 import net.lucypoulton.pronouns.common.platform.CommandSender;
 import org.jetbrains.annotations.Nullable;
@@ -17,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 public class HelpCommand implements ProNounsCommand {
     private final CommandManager<CommandSender> manager;
     private final ProNouns plugin;
-    private static final TextComponent NO_DESCRIPTION = Component.text("lucy is an idiot and forgot a description").decorate(TextDecoration.ITALIC);
+    private static final String NO_DESCRIPTION = "<italic>lucy is an idiot and forgot a description";
 
     private Component format(Command<?> command) {
         final var name = command.getArguments().stream()
@@ -28,10 +25,11 @@ public class HelpCommand implements ProNounsCommand {
                 .orElse("");
         final var desc = command.getCommandMeta().get(CommandMeta.DESCRIPTION).orElse("");
 
-        return Component.text("/pn ")
-                .append(plugin.formatter().accent(name))
-                .append(Component.text(" - ").color(TextColor.color(0x777777)))
-                .append(desc.equals("") ? NO_DESCRIPTION : Component.text(desc));
+        return plugin.formatter().translated(
+                "pronouns.command.help.entry",
+                false,
+                name, desc.equals("") ? NO_DESCRIPTION : desc
+        );
     }
 
     public HelpCommand(ProNouns plugin, CommandManager<CommandSender> manager) {
@@ -41,7 +39,8 @@ public class HelpCommand implements ProNounsCommand {
 
 
     public void execute(CommandSender sender, @Nullable String query) {
-        var out = Component.empty().append(Component.translatable("pronouns.command.help.title"))
+
+        var out = Component.empty().append(plugin.formatter().translated("pronouns.command.help.title", false))
                 .append(Component.newline());
 
         sender.sendMessage(out.append(

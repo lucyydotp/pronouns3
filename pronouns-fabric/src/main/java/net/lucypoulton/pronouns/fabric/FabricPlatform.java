@@ -38,7 +38,7 @@ public class FabricPlatform implements Platform {
 
     public FabricPlatform() {
         try {
-            config = PropertiesConfig.load(dataDir().resolve("pronouns.cfg"), logger());
+            config = new PropertiesConfig(dataDir().resolve("pronouns.cfg"), logger()).reloadConfig();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

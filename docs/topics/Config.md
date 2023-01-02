@@ -1,6 +1,8 @@
 # Config
 
-ProNouns can be configured by editing the configuration file.
+ProNouns can be configured by editing the configuration file. The file is a 
+[Java properties file](https://docs.oracle.com/javase/7/docs/api/java/util/Properties.html#load(java.io.Reader)).
+
 <tabs group="platform">
 <tab title="Paper" group-key="paper">
 For Paper, the config file is at <path>plugins/ProNouns/pronouns.cfg</path>.
@@ -12,8 +14,11 @@ For Fabric, the config file is at <path>config/pronouns.cfg</path>.
 
 ## Formatting
 
-> ProNouns makes frequent use of MiniMessage for formatting configuration. 
-> See <https://docs.adventure.kyori.net/minimessage/format.html>.
+> ProNouns uses of [MiniMessage](https://docs.adventure.kyori.net/minimessage/format.html) to format text. 
+> It's recommended that you familiarise yourself with its use.
+
+main
+: A MiniMessage tag that prefixes non-accent text. Defaults to `<reset>`.
 
 accent
 : A MiniMessage tag that prefixes accent text. Defaults to `<gradient:#fa9efa:#9dacfa>`.
@@ -40,5 +45,3 @@ updateChannel
     <td>Early development builds with bleeding-edge features. Not recommended for production use!</td>
 </tr>
 </table>
-
-
