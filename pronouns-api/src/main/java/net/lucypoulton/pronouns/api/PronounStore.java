@@ -3,6 +3,7 @@ package net.lucypoulton.pronouns.api;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -32,4 +33,9 @@ public interface PronounStore {
      * @param sets   the pronouns to set. Each entry must be unique. If the provided list is empty, then clear the user's pronouns.
      */
     void set(UUID player, @NotNull List<PronounSet> sets);
+
+    /**
+     * Gets a (possibly unmodifiable) map of every player and the pronouns they have set. This method may block.
+     */
+    Map<UUID, List<PronounSet>> dump();
 }

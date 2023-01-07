@@ -41,7 +41,8 @@ public class ProNouns implements ProNounsPlugin {
                 new DebugCommand(this, platform),
                 new UpdateCommand(this),
                 new HelpCommand(this, commandManager),
-                new ReloadCommand(this)
+                new ReloadCommand(this),
+                new DumpCommand(this, platform)
         );
 
         for (final var command : commands) {

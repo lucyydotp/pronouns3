@@ -16,7 +16,7 @@ public class Placeholders {
 
     public final Placeholder subjective = forPronoun("subjective", PronounSet::subjective);
     public final Placeholder objective = forPronoun("objective", PronounSet::objective);
-    public final Placeholder possessiveAdj = forPronoun("possessiveAdj", PronounSet::possessiveAdj);
+    public final Placeholder possessiveAdj = forPronoun("possessiveadj", PronounSet::possessiveAdj);
     public final Placeholder possessive = forPronoun("possessive", PronounSet::possessive);
     public final Placeholder reflexive = forPronoun("possessive", PronounSet::reflexive);
     public final Placeholder pronouns = forPronoun("pronouns", PronounSet::toString);

@@ -6,6 +6,7 @@ import net.kyori.adventure.text.Component;
 import net.lucypoulton.pronouns.api.ProNounsPlugin;
 import net.lucypoulton.pronouns.common.platform.CommandSender;
 import net.lucypoulton.pronouns.common.platform.Platform;
+import net.lucypoulton.pronouns.common.platform.ProNounsPermission;
 
 public class DebugCommand implements ProNounsCommand {
 
@@ -38,6 +39,7 @@ public class DebugCommand implements ProNounsCommand {
     public Command.Builder<CommandSender> build(Command.Builder<CommandSender> builder) {
         return builder.literal("debug")
                 .hidden()
+                .permission(ProNounsPermission.DEBUG.key)
                 .meta(CommandMeta.DESCRIPTION, CommandUtils.description("debug"))
                 .handler(ctx -> ctx.getSender().sendMessage(Component.text(
                         String.format(DEBUG_FORMAT, platform.currentVersion(), platform.name(), platform.config().updateChannel(),

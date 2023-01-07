@@ -7,7 +7,6 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.lucypoulton.pronouns.common.platform.Platform;
 
 import java.util.Locale;
-import java.util.logging.Logger;
 
 
 public class Formatter {
@@ -38,7 +37,6 @@ public class Formatter {
         final var entry = ProNounsTranslations.registry().translate(key, Locale.ROOT);
         if (entry == null) return Component.translatable(key);
         final var str = "<main>" + entry.format(args);
-        Logger.getLogger("pronouns").info(str);
         final var out = minimessage.deserialize(str);
         return includePrefix ? prefix.append(out) : out;
     }

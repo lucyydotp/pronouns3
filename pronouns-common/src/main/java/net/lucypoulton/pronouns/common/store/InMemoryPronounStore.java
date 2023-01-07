@@ -5,10 +5,7 @@ import net.lucypoulton.pronouns.api.PronounStore;
 import net.lucypoulton.pronouns.api.PronounSupplier;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * A non-persistent store intended for testing.
@@ -32,5 +29,10 @@ public class InMemoryPronounStore implements PronounStore {
     public void set(UUID player, @NotNull List<PronounSet> sets) {
         if (sets.size() == 0) storage.remove(player);
         else storage.put(player, sets);
+    }
+
+    @Override
+    public Map<UUID, List<PronounSet>> dump() {
+        return Collections.unmodifiableMap(storage);
     }
 }

@@ -34,16 +34,22 @@ public class FilePronounStore implements CachedPronounStore {
         properties.forEach((key, value) -> sets.put(UUID.fromString((String) key), parser.parse((String) value)));
     }
 
-    private synchronized void save() {
-        if (!isDirty) return;
+    public static void writeToFile(Map<UUID, List<PronounSet>> sets, Path path, String header) throws IOException {
         final var props = new Properties();
         sets.forEach(((uuid, pronounSets) -> props.put(uuid.toString(),
                 pronounSets.stream()
                         .map(PronounSet::toFullString)
                         .collect(Collectors.joining("/"))
         )));
-        try (final var outStream = Files.newOutputStream(filePath)) {
-            props.store(outStream, "ProNouns storage file. This file should not be edited while the server is running");
+        try (final var outStream = Files.newOutputStream(path)) {
+            props.store(outStream, header);
+        }
+    }
+
+    private synchronized void save() {
+        if (!isDirty) return;
+        try {
+            writeToFile(sets, filePath, "ProNouns storage file. This file should not be edited while the server is running");
             this.isDirty = false;
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -78,5 +84,10 @@ public class FilePronounStore implements CachedPronounStore {
         else this.sets.put(player, sets);
         this.isDirty = true;
         save();
+    }
+
+    @Override
+    public Map<UUID, List<PronounSet>> dump() {
+        return Collections.unmodifiableMap(sets);
     }
 }

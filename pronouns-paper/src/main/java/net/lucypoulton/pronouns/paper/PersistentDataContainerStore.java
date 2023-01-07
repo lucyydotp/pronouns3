@@ -11,6 +11,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -47,5 +48,10 @@ public class PersistentDataContainerStore implements PronounStore {
                 sets.stream()
                         .map(PronounSet::toFullString)
                         .collect(Collectors.joining("/")));
+    }
+
+    @Override
+    public Map<UUID, List<PronounSet>> dump() {
+        throw new IllegalStateException("PDC (paper NBT) store does not support dumping");
     }
 }

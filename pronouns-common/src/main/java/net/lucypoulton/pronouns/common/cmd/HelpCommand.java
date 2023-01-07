@@ -45,7 +45,11 @@ public class HelpCommand implements ProNounsCommand {
 
         sender.sendMessage(out.append(
                 this.manager.commands().stream()
-                        .filter(cmd -> sender.hasPermission(cmd.getCommandPermission().toString()))
+                        .filter(cmd -> {
+                            if (cmd.isHidden()) return false;
+                            final var perm = cmd.getCommandPermission().toString();
+                            return perm.equals("") || sender.hasPermission(perm);
+                        })
                         .map(this::format)
                         .reduce(Component.empty(), (last, cur) -> last.append(Component.newline()).append(cur))
         ));

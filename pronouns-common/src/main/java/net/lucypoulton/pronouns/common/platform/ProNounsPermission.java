@@ -21,6 +21,10 @@ public enum ProNounsPermission {
 
     RELOAD("pronouns.reload",
                    "Access to /pn reload",
+                   4),
+
+    DUMP("pronouns.dump",
+                   "Access to /pn dump",
                    4);
 
     /**

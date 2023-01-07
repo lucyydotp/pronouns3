@@ -10,10 +10,7 @@ import net.minecraft.world.PersistentState;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * A store that stores pronoun info as NBT data alongside a world.
@@ -79,6 +76,11 @@ public class NBTPronounStore extends PersistentState implements PronounStore {
         else pronounSets.put(player, sets);
         markDirty();
 
+    }
+
+    @Override
+    public Map<UUID, List<PronounSet>> dump() {
+        return Collections.unmodifiableMap(pronounSets);
     }
 
     @Override
