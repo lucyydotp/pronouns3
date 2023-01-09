@@ -14,6 +14,7 @@ permissions:
 
 env:
   PRODUCT: docs/p
+  ARTIFACT: webHelpP2-all.zip
 
 jobs:
   build-job:
@@ -30,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: artifact
-          path: artifacts/**
+          path: artifacts/${{ env.ARTIFACT }}
           retention-days: 7
 
   deploy:
