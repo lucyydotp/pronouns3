@@ -19,17 +19,20 @@ env:
 jobs:
   build-job:
     runs-on: ubuntu-latest
+    container: 
+      image: registry.jetbrains.team/p/writerside/builder/writerside-builder:2.1.984
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Build Writerside docs with docker
-        uses: lananovikova10/writerside-docker-action@v1.2
+      - run: |  
+          set -e
+          /opt/builder/bin/idea.sh helpbuilderinspect -source-dir ./docs -product $PRODUCT -output-dir artifacts/ || true
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-           name: artifact
-           path: artifacts/${{ env.ARTIFACT }}
-           retention-days: 7
+          name: artifact
+          path: artifacts/**
+          retention-days: 7
 
   deploy:
     environment:
