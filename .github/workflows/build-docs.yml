@@ -13,12 +13,15 @@ permissions:
   id-token: write
 
 env:
-  PRODUCT: docs/p
+  PRODUCT: pronouns/p
   ARTIFACT: pronouns-docs.zip
 
 jobs:
   build-job:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./docs
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
