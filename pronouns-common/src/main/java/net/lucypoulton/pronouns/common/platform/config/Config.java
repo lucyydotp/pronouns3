@@ -6,6 +6,12 @@ import net.lucypoulton.pronouns.common.UpdateChecker;
  * A configuration file.
  */
 public interface Config {
+
+    /**
+     * Which store the plugin should use.
+     */
+    String store();
+
     /**
      * Whether the plugin should check for updates.
      */
@@ -22,6 +28,11 @@ public interface Config {
      * A MiniMessage string that prefixes accent text.
      */
     String accent();
+
+    /**
+     * Whether to send anonymous statistics information about the plugin.
+     */
+    boolean stats();
 
     void reload();
 }

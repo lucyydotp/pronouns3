@@ -12,9 +12,15 @@ For Fabric, the config file is at <path>config/pronouns.cfg</path>.
 </tab>
 </tabs>
 
+## Store
+
+store
+: The type of store to use. If you don't know what to use, set this to <path>file</path>.
+Allowed values are platform-dependent, see [Stores](Stores.md), 
+
 ## Formatting
 
-> ProNouns uses of [MiniMessage](https://docs.adventure.kyori.net/minimessage/format.html) to format text. 
+> ProNouns uses [MiniMessage](https://docs.adventure.kyori.net/minimessage/format.html) to format text. 
 > It's recommended that you familiarise yourself with its use.
 
 main
@@ -45,3 +51,9 @@ updateChannel
     <td>Early development builds with bleeding-edge features. Not recommended for production use!</td>
 </tr>
 </table>
+
+## Stats
+
+stats
+: Whether to send anonymous statistics information about the plugin. Defaults to `true`. 
+See [Privacy](Privacy.md) for more information.

@@ -46,6 +46,11 @@ public interface Platform {
     String currentVersion();
 
     /**
+     * Gets the version of Minecraft this server is providing for.
+     */
+    String minecraftVersion();
+
+    /**
      * Gets the path to a directory that the plugin can use to store files.
      */
     Path dataDir();

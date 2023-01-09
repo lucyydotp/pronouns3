@@ -10,6 +10,7 @@ import net.lucypoulton.pronouns.common.platform.CommandSender;
 import net.lucypoulton.pronouns.common.platform.Platform;
 import net.lucypoulton.pronouns.common.platform.config.Config;
 import net.lucypoulton.pronouns.common.platform.config.PropertiesConfig;
+import net.minecraft.MinecraftVersion;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.Nullable;
@@ -61,6 +62,11 @@ public class FabricPlatform implements Platform {
     public String currentVersion() {
         return FabricLoader.getInstance().getModContainer("pronouns-fabric").orElseThrow()
                 .getMetadata().getVersion().getFriendlyString();
+    }
+
+    @Override
+    public String minecraftVersion() {
+        return MinecraftVersion.create().getName();
     }
 
     @Override

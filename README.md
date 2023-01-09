@@ -34,28 +34,8 @@ Download the Fabric jarfile and place it into your `mods` folder. Restart your s
 
 Support for these three platforms is planned but not yet implemented.
 
-# Commands
+# Data collection
 
-| Command                                        | Description                                                    |
-|------------------------------------------------|----------------------------------------------------------------|
-| `/pronouns get [username]`                     | Gets a player's pronouns, or your own if no username is given. | 
-| `/pronouns set <pronouns>`                     | Sets your pronouns.                                            |
-| `/pronouns set <pronouns> --player <username>` | Sets another player's pronouns.                                |
-| `/pronouns clear [username]`                   | Clears your pronouns, or your own if no username is given.     |
-| `/pronouns version`                            | Shows the plugin's version.                                    |
-
-# Pronoun stores
-
-The plugin stores pronouns using a store. There are different types of store:
-
-| Name  | Description                                | Paper             | Fabric            |
-|-------|--------------------------------------------|-------------------|-------------------|
-| NBT   | Stores pronouns in the server's world data | ✓                 | ✓                 |
-| File  | Stores pronouns in a dedicated file        | ✓                 | ✓                 |
-| MySQL | Stores pronouns in a MySQL database        | Soon<sup>TM</sup> | Soon<sup>TM</sup> |
-
-This will be configurable in the future.
-
-# Configuration
-
-Not yet implemented.
+ProNouns anonymously collects some statistics, similar to bStats. Details of what's collected, your rights, and how to 
+opt out can be found at the documentation page.
+FIXME - link to docs here

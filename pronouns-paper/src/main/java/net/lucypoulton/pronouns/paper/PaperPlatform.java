@@ -47,6 +47,11 @@ public class PaperPlatform implements Platform {
     }
 
     @Override
+    public String minecraftVersion() {
+        return Bukkit.getMinecraftVersion();
+    }
+
+    @Override
     public Path dataDir() {
         return plugin.getDataFolder().toPath();
     }

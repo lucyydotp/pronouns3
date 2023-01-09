@@ -3,6 +3,7 @@ package net.lucypoulton.pronouns.common.store;
 import net.lucypoulton.pronouns.api.PronounSet;
 import net.lucypoulton.pronouns.api.PronounSupplier;
 import net.lucypoulton.pronouns.api.impl.PronounParser;
+import net.lucypoulton.pronouns.common.util.PropertiesUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -25,9 +26,9 @@ public class FilePronounStore implements CachedPronounStore {
             save();
             return;
         }
-        final var properties = new Properties();
-        try (final var inStream = Files.newInputStream(this.filePath)) {
-            properties.load(inStream);
+        Properties properties;
+        try {
+            properties = PropertiesUtil.fromFile(this.filePath);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -8,11 +8,11 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.lucypoulton.pronouns.common.platform.Platform;
+import net.lucypoulton.pronouns.common.util.HttpUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
@@ -54,8 +54,6 @@ public class UpdateChecker {
     }
 
     private static final String PROJECT_ID = "pronouns";
-    private static final HttpClient client = HttpClient.newHttpClient();
-
     private final ProNouns plugin;
     private final Platform platform;
     private final URI uri;
@@ -81,10 +79,6 @@ public class UpdateChecker {
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private String userAgent() {
-        return String.format("ProNouns/%s (%s) (github/lucypoulton)", platform.currentVersion(), platform.name());
     }
 
     private Version handle(JsonArray entries) {
@@ -129,23 +123,22 @@ public class UpdateChecker {
         }
         final var req = HttpRequest.newBuilder()
                 .uri(uri)
-                .header("User-Agent", userAgent())
+                .header("User-Agent", HttpUtil.userAgent(platform))
                 .GET()
                 .build();
-        client.sendAsync(req, HttpResponse.BodyHandlers.ofString())
-                .thenApply(r -> {
-                    if (r.statusCode() / 100 != 2) {
-                        // something went wrong
-                        throw new UpdateCheckException("HTTP " + r.statusCode() + " " + uri);
-                    }
-                    return JsonParser.parseString(r.body()).getAsJsonArray();
-                })
-                .thenApply(this::handle)
-                .thenAccept(this::broadcast)
-                .exceptionally(ex -> {
-                    platform.logger().warning("Failed to check for updates: " +
-                            (ex.getCause() == null ? ex : ex.getCause()).toString());
-                    return null;
-                });
+        try {
+            final var r = HttpUtil.client().send(req, HttpResponse.BodyHandlers.ofString());
+            if (r.statusCode() / 100 != 2) {
+                // something went wrong
+                throw new UpdateCheckException("HTTP " + r.statusCode() + " " + uri);
+            }
+            final var body = JsonParser.parseString(r.body()).getAsJsonArray();
+            broadcast(handle(body));
+
+        } catch (Exception ex) {
+            platform.logger().warning("Failed to check for updates: " +
+                    (ex.getCause() == null ? ex : ex.getCause()).toString());
+
+        }
     }
 }

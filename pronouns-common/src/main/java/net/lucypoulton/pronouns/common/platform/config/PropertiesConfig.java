@@ -1,6 +1,7 @@
 package net.lucypoulton.pronouns.common.platform.config;
 
 import net.lucypoulton.pronouns.common.UpdateChecker.Channel;
+import net.lucypoulton.pronouns.common.util.PropertiesUtil;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,6 +19,10 @@ public class PropertiesConfig implements Config {
 
     private String main;
     private String accent;
+
+    private boolean stats;
+
+    private String store;
 
     private String getValue(Properties properties, String key, String defaultValue) {
         final var out = properties.getOrDefault(key, defaultValue);
@@ -37,14 +42,10 @@ public class PropertiesConfig implements Config {
                 Files.copy(config, path);
             }
         }
-        Properties props;
-        try (final var file = Files.newInputStream(path)) {
-            final var properties = new Properties();
-            properties.load(file);
-            props = properties;
-        }
+        final var props = PropertiesUtil.fromFile(path);
 
         this.checkForUpdates = !getValue(props, "checkForUpdates", "true").equals("false");
+        this.stats = !getValue(props, "stats", "true").equals("false");
         final var channelString = getValue(props, "updateChannel", "release");
         this.updateChannel = switch (channelString.trim().toLowerCase(Locale.ROOT)) {
             case "alpha" -> Channel.ALPHA;
@@ -57,6 +58,7 @@ public class PropertiesConfig implements Config {
         };
         this.main = getValue(props, "main", "<reset>");
         this.accent = getValue(props, "accent", "<gradient:#fa9efa:#9dacfa>");
+        this.store = getValue(props, "store", null);
 
         return this;
     }
@@ -68,6 +70,11 @@ public class PropertiesConfig implements Config {
         } catch (IOException e) {
             logger.severe(e.getMessage());
         }
+    }
+
+    @Override
+    public String store() {
+        return store;
     }
 
     @Override
@@ -88,5 +95,10 @@ public class PropertiesConfig implements Config {
     @Override
     public String accent() {
         return accent;
+    }
+
+    @Override
+    public boolean stats() {
+        return stats;
     }
 }

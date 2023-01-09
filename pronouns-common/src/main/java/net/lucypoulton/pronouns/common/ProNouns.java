@@ -14,11 +14,16 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class ProNouns implements ProNounsPlugin {
 
+    private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     private final PronounParser parser;
     private final Platform platform;
+    private final PluginMeta meta;
     private final Placeholders placeholders = new Placeholders(this);
     private PronounStore store;
     private @Nullable
@@ -29,9 +34,14 @@ public class ProNouns implements ProNounsPlugin {
         this.platform = platform;
         this.formatter = new Formatter(platform);
         this.parser = new PronounParser(() -> store.predefined().get());
+        this.meta = new PluginMeta(platform);
 
         GlobalTranslator.translator().addSource(ProNounsTranslations.registry());
         final var commandManager = platform.commandManager();
+
+        if (meta.isFirstRun()) {
+            platform.logger().info(ProNounsTranslations.translate("pronouns.first-launch"));
+        }
 
         final var commands = List.of(
                 new GetCommand(this, platform),
@@ -55,16 +65,28 @@ public class ProNouns implements ProNounsPlugin {
         if (!isDevelopmentVersion && platform.config().checkForUpdates()) {
             checker = new UpdateChecker(this, platform);
             checker.checkForUpdates(false);
+            executorService.scheduleAtFixedRate(
+                    () -> checker.checkForUpdates(false),
+                    0,
+                    6,
+                    TimeUnit.HOURS
+            );
+
         } else {
             checker = null;
             platform.logger().warning(isDevelopmentVersion ?
                     "Development version " + platform.currentVersion() + ", disabling update checker." :
                     ProNounsTranslations.translate("pronouns.update.disabled"));
         }
+
+        if (platform.config().stats()) {
+            final var stats = new Statistics(this, platform);
+            executorService.scheduleAtFixedRate(stats::send, 5, 15, TimeUnit.MINUTES);
+        }
     }
 
-    public void createStore(StoreFactory store) {
-        this.store = store.create("nbt", platform);
+    public void createStore(StoreFactory factory) {
+        this.store = factory.create(platform.config().store(), platform);
     }
 
     public void reload() {
@@ -92,5 +114,9 @@ public class ProNouns implements ProNounsPlugin {
 
     public Placeholders placeholders() {
         return placeholders;
+    }
+
+    public PluginMeta meta() {
+        return meta;
     }
 }

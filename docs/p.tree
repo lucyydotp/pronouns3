@@ -10,4 +10,5 @@
     <toc-element topic="getting-started.md"/>
     <toc-element topic="Config.md"/>
     <toc-element topic="Stores.md"/>
+    <toc-element topic="Privacy.md"/>
 </instance-profile>
