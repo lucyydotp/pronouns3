@@ -19,9 +19,6 @@ env:
 jobs:
   build-job:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./docs
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
