@@ -13,8 +13,7 @@ permissions:
   id-token: write
 
 env:
-  PRODUCT: pronouns/p
-  ARTIFACT: pronouns-docs.zip
+  PRODUCT: docs/p
 
 jobs:
   build-job:
