@@ -57,3 +57,8 @@ updateChannel
 stats
 : Whether to send anonymous statistics information about the plugin. Defaults to `true`. 
 See [Privacy](Privacy.md) for more information.
+
+# Default config
+```ini
+```
+{src="/pronouns-common/src/main/resources/pronouns-default.cfg"}
