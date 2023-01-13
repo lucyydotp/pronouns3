@@ -70,9 +70,9 @@ and drop in _**She** is very cool_
 
 or _**They** is very cool_ - &nbsp;
 
--oh. "They is" doesn't quite seem right. To understand why, we need to talk about verb forms and conjugation
+-oh. "They is" doesn't quite seem right. To understand why, we need to talk about verb forms and conjugation.
 
-Verbs come in many forms, but most start life as in the **infinitive**. This form usually starts with "to ",
+Verbs come in many forms, but most start life in the **infinitive** form. This form usually starts with "to ",
 for example "to have", "to be", "to go", etc. 
 
 To make them usable in a sentence, we need to take them out of the infinitive - this is called **conjugation**.
