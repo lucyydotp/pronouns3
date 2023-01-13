@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://helpserver.labs.jb.gg/help/schemas/mvp/html-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://helpserver.labs.jb.gg/help/schemas/mvp/topic.v2.xsd"
+       title="snippets" id="snippets" is-library="true">
+
+    <snippet id="grammar">
+        <note>
+                This page won't make much sense if you haven't first read <a href="Boring-nerdy-grammar-stuff.md" />!
+        </note>
+    </snippet>
+</topic>

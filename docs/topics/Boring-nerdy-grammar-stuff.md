@@ -1,6 +1,6 @@
 # Boring nerdy grammar stuff
 
-Time for a high school English lesson :D
+Time for an English lesson :D
 
 ProNouns is much more useful if you understand what it's actually doing. This page aims to cover everything grammatical
 that you need to know, starting with the absolute basics and building up.
@@ -44,18 +44,13 @@ We use different pronouns depending on if we're talking about the subject or the
 
 Here are all the types you need to care about: 
 
-| Type                | Description                                   | Example                            |
-|---------------------|-----------------------------------------------|------------------------------------|
-| Personal subjective | Referring to the subject                      | **She** sounds really cool.        |
-| Personal objective  | Referring to the object                       | I'd love to meet **her**.          |
-| Possessive          | Indicates possession                          | This server is **hers**.           |
-| Reflexive           | When the subject and the object are the same  | She should be proud of **herself** |
-
-There's also the **possessive adjective**. While _technically_ not a pronoun, it behaves very similarly, 
-and the plugin treats it as part of a pronoun set:
-
-_That's **her** car_.
-
+| Type                 | Description                                                               | Example                            |
+|----------------------|---------------------------------------------------------------------------|------------------------------------|
+| Personal subjective  | Referring to the subject                                                  | **She** sounds really cool.        |
+| Personal objective   | Referring to the object                                                   | I'd love to meet **her**.          |
+| Possessive           | Indicates possession                                                      | This server is **hers**.           |
+| Possessive adjective | Indicates possession (technically not a pronoun but it behaves similarly) | That's **her** car.                |
+| Reflexive            | When the subject and the object are the same                              | She should be proud of **herself** |
 
 There are more types of pronoun, but they're not relevant to us as they don't change depending on the person using them.
 

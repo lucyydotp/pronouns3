@@ -1,5 +1,7 @@
 # Placeholders
 
+<include from="snippets.topic" element-id="grammar"/>
+
 ProNouns supports placeholders to let other plugins use pronouns in messsages.
 <p switcher-key="Paper">
 Placeholders are available through <a href="https://www.spigotmc.org/resources/placeholderapi.6245/">PlaceholderAPI</a>
