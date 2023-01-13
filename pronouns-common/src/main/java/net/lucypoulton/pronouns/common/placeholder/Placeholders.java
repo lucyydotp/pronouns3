@@ -13,10 +13,9 @@ import java.util.function.Function;
 
 public class Placeholders {
 
-    private static String applyModifiers(PronounSet set, String value, String[] modifiers, int startIdx) {
+    private static String applyModifiers(PronounSet set, String value, String[] modifiers) {
         var out = value;
-        for (int i = startIdx; i < modifiers.length; i++) {
-            final var mod = modifiers[i];
+        for (final String mod : modifiers) {
             out = switch (mod.toLowerCase(Locale.ROOT)) {
                 case "uppercase" -> out.toUpperCase(Locale.ROOT);
                 case "lowercase" -> out.toLowerCase(Locale.ROOT);
@@ -59,7 +58,7 @@ public class Placeholders {
             final var set = plugin.store().sets(sender.uuid().get()).get(0);
             final var split = s.split("[_ ]");
             final var out = value.apply(set, split);
-            if (out.success()) return Result.of(applyModifiers(set,out.message(), split, 1));
+            if (out.success()) return Result.of(applyModifiers(set,out.message(), split));
             return out;
         }));
     }
