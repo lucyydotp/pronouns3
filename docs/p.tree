@@ -7,9 +7,10 @@
                  start-page="getting-started.md">
 
     <toc-element toc-title="Support" href="https://some.link.here"/>
-    <toc-element topic="Placeholders.md"/>
     <toc-element topic="getting-started.md"/>
     <toc-element topic="Config.md"/>
     <toc-element topic="Stores.md"/>
+    <toc-element topic="Placeholders.md"/>
+    <toc-element topic="Boring-nerdy-grammar-stuff.md"/>
     <toc-element topic="Privacy.md"/>
 </instance-profile>
