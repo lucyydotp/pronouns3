@@ -1,4 +1,4 @@
-# Privacy
+# Data collection and privacy
 
 ProNouns collects a small amount of statistical information related to your server.
 
