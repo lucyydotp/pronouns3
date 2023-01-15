@@ -14,4 +14,5 @@ dependencies {
     compileOnlyApi(libs.adventure.api)
     compileOnlyApi(libs.adventure.text.minimessage)
     implementation("com.google.code.gson:gson:2.10")
+    implementation(libs.hikari)
 }

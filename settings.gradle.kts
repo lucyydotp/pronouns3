@@ -22,5 +22,6 @@ dependencyResolutionManagement {
         listOf("core", "fabric", "paper").forEach {
             library("cloud.$it", "cloud.commandframework", "cloud-$it").versionRef("cloud")
         }
+        library("hikari", "com.zaxxer:HikariCP:5.0.1")
     }
 }

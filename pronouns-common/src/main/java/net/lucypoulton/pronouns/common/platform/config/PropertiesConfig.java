@@ -2,6 +2,7 @@ package net.lucypoulton.pronouns.common.platform.config;
 
 import net.lucypoulton.pronouns.common.UpdateChecker.Channel;
 import net.lucypoulton.pronouns.common.util.PropertiesUtil;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,6 +24,10 @@ public class PropertiesConfig implements Config {
     private boolean stats;
 
     private String store;
+
+    private @Nullable String mysqlUrl;
+    private @Nullable String mysqlUsername;
+    private @Nullable String mysqlPassword;
 
     private String getValue(Properties properties, String key, String defaultValue) {
         final var out = properties.getOrDefault(key, defaultValue);
@@ -59,6 +64,11 @@ public class PropertiesConfig implements Config {
         this.main = getValue(props, "main", "<reset>");
         this.accent = getValue(props, "accent", "<gradient:#fa9efa:#9dacfa>");
         this.store = getValue(props, "store", null);
+
+        // these have no defaults intentionally - we throw on retrieval as to not throw when not using mysql
+        this.mysqlUrl = props.getProperty("mysql.url");
+        this.mysqlUsername = props.getProperty("mysql.username");
+        this.mysqlPassword = props.getProperty("mysql.password");
 
         return this;
     }
@@ -100,5 +110,14 @@ public class PropertiesConfig implements Config {
     @Override
     public boolean stats() {
         return stats;
+    }
+
+    @Override
+    public MySqlConnectionInfo mysql() {
+        if (mysqlUrl == null) throw new InvalidConfigurationException("Missing MySQL URL");
+        if (mysqlUsername == null) throw new InvalidConfigurationException("Missing MySQL username");
+        if (mysqlPassword == null) throw new InvalidConfigurationException("Missing MySQL password");
+
+        return new MySqlConnectionInfo(mysqlUrl, mysqlUsername, mysqlPassword);
     }
 }

@@ -21,8 +21,7 @@ public class InMemoryPronounStore implements PronounStore {
 
     @Override
     public List<PronounSet> sets(UUID player) {
-        final var sets = storage.get(player);
-        return sets == null ? List.of(PronounSet.Builtins.UNSET) : sets;
+        return storage.getOrDefault(player, UNSET_LIST);
     }
 
     @Override

@@ -52,6 +52,25 @@ updateChannel
 </tr>
 </table>
 
+## MySQL
+
+mysql.url
+: A JDBC URL for a MySQL database, in the form
+    ```
+    jdbc:mysql://hostname:port/database
+    ```
+    For example, a database called `pronouns` on `localhost`, port 3306, would be
+    ```
+    jdbc:mysql://localhost:3306/pronouns
+    ```
+
+
+mysql.username
+: A username for the database.
+
+mysql.password
+: A password for the database.
+
 ## Stats
 
 stats

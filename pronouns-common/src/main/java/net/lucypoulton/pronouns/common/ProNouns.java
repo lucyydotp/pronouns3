@@ -13,7 +13,9 @@ import net.lucypoulton.pronouns.common.store.StoreFactory;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -86,12 +88,16 @@ public class ProNouns implements ProNounsPlugin {
     }
 
     public void createStore(StoreFactory factory) {
-        this.store = factory.create(platform.config().store(), platform);
+        this.store = factory.create(platform.config().store().toLowerCase(Locale.ROOT).trim(), this);
     }
 
     public void reload() {
         platform.config().reload();
         this.formatter = new Formatter(platform);
+    }
+
+    public Platform platform() {
+        return platform;
     }
 
     @Override
@@ -118,5 +124,9 @@ public class ProNouns implements ProNounsPlugin {
 
     public PluginMeta meta() {
         return meta;
+    }
+
+    public ExecutorService executorService() {
+        return executorService;
     }
 }

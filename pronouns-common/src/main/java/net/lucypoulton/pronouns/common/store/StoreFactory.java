@@ -1,7 +1,7 @@
 package net.lucypoulton.pronouns.common.store;
 
 import net.lucypoulton.pronouns.api.PronounStore;
-import net.lucypoulton.pronouns.common.platform.Platform;
+import net.lucypoulton.pronouns.common.ProNouns;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,10 +16,11 @@ public class StoreFactory {
         }
     }
 
-    public PronounStore create(String key, Platform platform) {
+    public PronounStore create(String key, ProNouns plugin) {
         return switch (key) {
             case "in_memory" -> new InMemoryPronounStore();
-            case "file" -> new FilePronounStore(platform.dataDir());
+            case "file" -> new FilePronounStore(plugin.platform().dataDir());
+            case "mysql" -> new MySqlPronounStore(plugin, plugin.platform().config().mysql());
             default -> {
                 final var supplier = suppliers.get(key);
                 if (supplier == null) throw new IllegalStateException("Unknown pronoun store type " + key);

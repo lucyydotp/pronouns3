@@ -34,5 +34,12 @@ public interface Config {
      */
     boolean stats();
 
+    /**
+     * MySQL connection info.
+     */
+    MySqlConnectionInfo mysql();
+
     void reload();
+
+    record MySqlConnectionInfo(String jdbcUrl, String username, String password) { }
 }

@@ -34,9 +34,10 @@ store = mysql
 Stores pronouns in a MySQL database. This has the advantage of allowing pronouns to be shared across servers, 
 for example a BungeeCord network.
 
-    {style="narrow"}
-    Platforms
-    : none lol it doesn't exist yet
+    > If you're migrating from ProNouns 2.x, do not reuse the same database! The database format has changed.
+    > Automatic migration is coming soon.
+    >
+    {style="warning"}
 
 In-memory
 : 

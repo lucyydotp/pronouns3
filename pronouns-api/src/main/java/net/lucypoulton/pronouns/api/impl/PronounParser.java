@@ -6,6 +6,7 @@ import net.lucypoulton.pronouns.api.impl.set.SimplePronounSet;
 
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PronounParser {
 	private final PronounSupplier store;
@@ -42,5 +43,12 @@ public class PronounParser {
 		}
 		if (out.isEmpty()) throw new IllegalArgumentException("Failed to parse " + input);
 		return List.copyOf(out);
+	}
+
+	public String toString(List<PronounSet> pronounSets) {
+		final var predefined = store.get();
+		return pronounSets.stream()
+				.map(set -> predefined.contains(set) ? set.subjective() : set.toFullString())
+				.collect(Collectors.joining("/"));
 	}
 }
