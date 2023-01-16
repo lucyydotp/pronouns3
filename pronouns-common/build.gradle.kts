@@ -13,6 +13,6 @@ dependencies {
     compileOnlyApi(libs.cloud.core)
     compileOnlyApi(libs.adventure.api)
     compileOnlyApi(libs.adventure.text.minimessage)
-    implementation("com.google.code.gson:gson:2.10")
-    implementation(libs.hikari)
+    compileOnly(libs.gson)
+    compileOnly(libs.hikari)
 }

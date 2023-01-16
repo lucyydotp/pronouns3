@@ -9,8 +9,13 @@ import net.lucypoulton.pronouns.common.platform.config.Config;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 public class MySqlPronounStore implements CachedPronounStore, AutoCloseable {
 
@@ -19,7 +24,16 @@ public class MySqlPronounStore implements CachedPronounStore, AutoCloseable {
     private final ProNouns plugin;
     private static final PronounParser parser = new PronounParser(PronounSet.builtins);
 
+    private Instant lastTimestamp = Instant.now();
+
     public MySqlPronounStore(final ProNouns plugin, final Config.MySqlConnectionInfo connectionInfo) {
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
         this.plugin = plugin;
         dataSource = new HikariDataSource();
         dataSource.setJdbcUrl(connectionInfo.jdbcUrl());
@@ -35,13 +49,17 @@ public class MySqlPronounStore implements CachedPronounStore, AutoCloseable {
             con.prepareStatement("""
                     CREATE TABLE IF NOT EXISTS pronouns (
                         player UUID PRIMARY KEY,
-                        pronouns TEXT NOT NULL
+                        pronouns TEXT NOT NULL,
+                        last_updated_from UUID NOT NULL,
+                        last_updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
                     )
                     """).execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         plugin.platform().logger().info("Connected to MySQL");
+
+        plugin.executorService().scheduleWithFixedDelay(this::poll, 3, 3, TimeUnit.SECONDS);
     }
 
     private void push(UUID uuid, List<PronounSet> sets) {
@@ -52,12 +70,46 @@ public class MySqlPronounStore implements CachedPronounStore, AutoCloseable {
                 stmt.execute();
                 return;
             }
-            final var stmt = con.prepareStatement("REPLACE INTO pronouns (player, pronouns) VALUES (?, ?)");
+            final var stmt = con.prepareStatement("REPLACE INTO pronouns (player, pronouns, last_updated_from) VALUES (?, ?, ?)");
             stmt.setString(1, uuid.toString());
             stmt.setString(2, parser.toString(sets));
+            stmt.setString(3, plugin.meta().identifier());
             stmt.execute();
         } catch (SQLException e) {
             plugin.platform().logger().severe("Failed to write pronouns to MySQL: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Polls the database to keep the cache up to date.
+     * Selects all entries where:
+     * - a cache entry already exists (i.e. they're on the server)
+     * -
+     */
+    private void poll() {
+        try (final var con = dataSource.getConnection()) {
+            if (cache.size() == 0) return;
+            final var stmt = con.prepareStatement(
+                    "SELECT * FROM pronouns WHERE last_updated_at > ? AND last_updated_from != ?"
+            );
+            stmt.setTimestamp(1, Timestamp.from(lastTimestamp));
+            stmt.setString(2, plugin.meta().identifier());
+            final var results = stmt.executeQuery();
+            while (results.next()) {
+                final var uuid = UUID.fromString(results.getString("player"));
+                if (!cache.containsKey(uuid)) continue;
+                final var newSets = parser.parse(results.getString("pronouns"));
+                cache.put(uuid, newSets);
+
+                // this is safe - if the player is not present they won't be in the cache
+                //noinspection OptionalGetWithoutIsPresent
+                plugin.platform().logger().info("Player " +
+                        plugin.platform().getPlayer(uuid).get().name() +
+                        " changed pronouns to " + PronounSet.format(newSets) + " on another server");
+            }
+            lastTimestamp = Instant.now();
+        } catch (Exception e) {
+            plugin.platform().logger().severe("Failed to update pronoun cache from MySQL: " + e.getMessage());
         }
     }
 

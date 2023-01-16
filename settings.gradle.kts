@@ -23,5 +23,7 @@ dependencyResolutionManagement {
             library("cloud.$it", "cloud.commandframework", "cloud-$it").versionRef("cloud")
         }
         library("hikari", "com.zaxxer:HikariCP:5.0.1")
+
+        library("gson", "com.google.code.gson:gson:2.10")
     }
 }

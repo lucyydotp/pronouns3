@@ -15,14 +15,17 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class ProNouns implements ProNounsPlugin {
 
-    private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+    private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor(r -> {
+        final var thread = new Thread(r);
+        thread.setName("ProNouns worker");
+        return thread;
+    });
     private final PronounParser parser;
     private final Platform platform;
     private final PluginMeta meta;
@@ -37,6 +40,8 @@ public class ProNouns implements ProNounsPlugin {
         this.formatter = new Formatter(platform);
         this.parser = new PronounParser(() -> store.predefined().get());
         this.meta = new PluginMeta(platform);
+
+        platform.logger().info(meta.identifier());
 
         GlobalTranslator.translator().addSource(ProNounsTranslations.registry());
         final var commandManager = platform.commandManager();
@@ -126,7 +131,7 @@ public class ProNouns implements ProNounsPlugin {
         return meta;
     }
 
-    public ExecutorService executorService() {
+    public ScheduledExecutorService executorService() {
         return executorService;
     }
 }

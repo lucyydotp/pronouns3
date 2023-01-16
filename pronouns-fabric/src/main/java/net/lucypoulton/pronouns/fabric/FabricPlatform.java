@@ -14,6 +14,7 @@ import net.minecraft.MinecraftVersion;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -34,6 +35,8 @@ public class FabricPlatform implements Platform {
             CommandSourceWrapper::new,
             source -> ((CommandSourceWrapper) source).source()
     );
+
+    private final Logger logger = new Slf4jLoggerShim(LoggerFactory.getLogger("ProNouns"));
 
     private final Config config;
 
@@ -81,7 +84,7 @@ public class FabricPlatform implements Platform {
 
     @Override
     public Logger logger() {
-        return Logger.getLogger("ProNouns");
+        return logger;
     }
 
     @Override

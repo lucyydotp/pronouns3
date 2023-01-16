@@ -22,6 +22,8 @@ dependencies {
     modImplementation(libs.cloud.fabric)
     include(libs.cloud.fabric)
     modImplementation(include("eu.pb4:placeholder-api:2.0.0-pre.2+1.19.3")!!)
+    include(libs.hikari)
+    include("com.mysql:mysql-connector-j:8.0.31")
 }
 
 tasks {
