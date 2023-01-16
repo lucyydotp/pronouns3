@@ -59,7 +59,7 @@ public class MySqlPronounStore implements CachedPronounStore, AutoCloseable {
         }
         plugin.platform().logger().info("Connected to MySQL");
 
-        plugin.executorService().scheduleWithFixedDelay(this::poll, 3, 3, TimeUnit.SECONDS);
+        plugin.executorService().scheduleWithFixedDelay(this::poll, 10, 10, TimeUnit.SECONDS);
     }
 
     private void push(UUID uuid, List<PronounSet> sets) {
@@ -83,8 +83,11 @@ public class MySqlPronounStore implements CachedPronounStore, AutoCloseable {
     /**
      * Polls the database to keep the cache up to date.
      * Selects all entries where:
-     * - a cache entry already exists (i.e. they're on the server)
-     * -
+     * <ul>
+     *     <li>a cache entry already exists (i.e. they're on the server)</li>
+     *     <li>it has changed since the last time the server polled</li>
+     *     <li>it was last updated by a different server</li>
+     * </ul>
      */
     private void poll() {
         try (final var con = dataSource.getConnection()) {
