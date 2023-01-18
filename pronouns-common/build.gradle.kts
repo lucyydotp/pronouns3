@@ -1,6 +1,7 @@
 plugins {
     `java-library`
     id("pronouns.conventions")
+    id("pronouns.unitTest")
 }
 
 repositories {
