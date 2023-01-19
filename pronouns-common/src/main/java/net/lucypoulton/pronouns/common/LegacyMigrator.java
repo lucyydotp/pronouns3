@@ -1,7 +1,7 @@
 package net.lucypoulton.pronouns.common;
 
-import net.lucypoulton.pronouns.api.PronounSet;
-import net.lucypoulton.pronouns.api.impl.PronounParser;
+import net.lucypoulton.pronouns.api.set.PronounSet;
+import net.lucypoulton.pronouns.api.PronounParser;
 
 public class LegacyMigrator {
 

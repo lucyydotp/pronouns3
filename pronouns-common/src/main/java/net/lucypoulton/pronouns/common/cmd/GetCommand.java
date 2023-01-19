@@ -2,7 +2,7 @@ package net.lucypoulton.pronouns.common.cmd;
 
 import cloud.commandframework.Command;
 import cloud.commandframework.meta.CommandMeta;
-import net.lucypoulton.pronouns.api.PronounSet;
+import net.lucypoulton.pronouns.api.set.PronounSet;
 import net.lucypoulton.pronouns.common.ProNouns;
 import net.lucypoulton.pronouns.common.platform.CommandSender;
 import net.lucypoulton.pronouns.common.platform.Platform;

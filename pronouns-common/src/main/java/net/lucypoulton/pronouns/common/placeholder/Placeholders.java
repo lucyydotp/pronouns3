@@ -1,7 +1,7 @@
 package net.lucypoulton.pronouns.common.placeholder;
 
 import net.lucypoulton.pronouns.api.Conjugator;
-import net.lucypoulton.pronouns.api.PronounSet;
+import net.lucypoulton.pronouns.api.set.PronounSet;
 import net.lucypoulton.pronouns.common.ProNouns;
 import net.lucypoulton.pronouns.common.placeholder.Placeholder.Result;
 import net.lucypoulton.pronouns.common.util.EnumUtil;

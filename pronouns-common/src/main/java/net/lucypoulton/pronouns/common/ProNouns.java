@@ -3,7 +3,7 @@ package net.lucypoulton.pronouns.common;
 import net.kyori.adventure.translation.GlobalTranslator;
 import net.lucypoulton.pronouns.api.ProNounsPlugin;
 import net.lucypoulton.pronouns.api.PronounStore;
-import net.lucypoulton.pronouns.api.impl.PronounParser;
+import net.lucypoulton.pronouns.api.PronounParser;
 import net.lucypoulton.pronouns.common.cmd.*;
 import net.lucypoulton.pronouns.common.message.Formatter;
 import net.lucypoulton.pronouns.common.message.ProNounsTranslations;

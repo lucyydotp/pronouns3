@@ -1,9 +1,9 @@
 package net.lucypoulton.pronouns.fabric;
 
-import net.lucypoulton.pronouns.api.PronounSet;
+import net.lucypoulton.pronouns.api.set.PronounSet;
 import net.lucypoulton.pronouns.api.PronounStore;
-import net.lucypoulton.pronouns.api.PronounSupplier;
-import net.lucypoulton.pronouns.api.impl.PronounParser;
+import net.lucypoulton.pronouns.api.supplier.PronounSupplier;
+import net.lucypoulton.pronouns.api.PronounParser;
 import net.minecraft.nbt.*;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.PersistentState;

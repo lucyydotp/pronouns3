@@ -1,8 +1,8 @@
 package net.lucypoulton.pronouns.common.store;
 
-import net.lucypoulton.pronouns.api.PronounSet;
+import net.lucypoulton.pronouns.api.set.PronounSet;
 import net.lucypoulton.pronouns.api.PronounStore;
-import net.lucypoulton.pronouns.api.PronounSupplier;
+import net.lucypoulton.pronouns.api.supplier.PronounSupplier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;

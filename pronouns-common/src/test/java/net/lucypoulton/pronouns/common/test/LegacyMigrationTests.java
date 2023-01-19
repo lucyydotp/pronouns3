@@ -1,7 +1,7 @@
 package net.lucypoulton.pronouns.common.test;
 
-import net.lucypoulton.pronouns.api.PronounSet;
-import net.lucypoulton.pronouns.api.PronounSet.Builtins;
+import net.lucypoulton.pronouns.api.set.PronounSet;
+import net.lucypoulton.pronouns.api.set.PronounSet.Builtins;
 import net.lucypoulton.pronouns.common.LegacyMigrator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,21 +11,6 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LegacyMigrationTests {
-
-
-    /*
-    Any
-it/it/it's/its/its/itself
-xe/xem/xe's/xyr/xyrs/xemself
-fae/faer/fae’re/faer/faers/faeself
-ve/ver/ve’s/vis/vis/verself
-xey/xem/xey's/xeir/xeirs/xemself
-ze/hir/ze/hir/hirs/hirself
-Ask
-ey/em/ey're/eir/eirs/emself
-
-     */
-
     @Test
     @DisplayName("Migrates predefined sets")
     public void migratesPredefined() {

@@ -1,9 +1,9 @@
 package net.lucypoulton.pronouns.common.store;
 
 import com.zaxxer.hikari.HikariDataSource;
-import net.lucypoulton.pronouns.api.PronounSet;
-import net.lucypoulton.pronouns.api.PronounSupplier;
-import net.lucypoulton.pronouns.api.impl.PronounParser;
+import net.lucypoulton.pronouns.api.set.PronounSet;
+import net.lucypoulton.pronouns.api.supplier.PronounSupplier;
+import net.lucypoulton.pronouns.api.PronounParser;
 import net.lucypoulton.pronouns.common.ProNouns;
 import net.lucypoulton.pronouns.common.platform.config.Config;
 import org.jetbrains.annotations.NotNull;

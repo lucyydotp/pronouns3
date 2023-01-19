@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    api(project(":pronouns-api"))
+    api(project(":pronouns-core"))
     compileOnlyApi(libs.cloud.core)
     compileOnlyApi(libs.adventure.api)
     compileOnlyApi(libs.adventure.text.minimessage)
