@@ -7,25 +7,25 @@ public enum ProNounsPermission {
 
     SET("pronouns.set", "Access to /pn set and /pn clear", 0),
     SET_OTHER("pronouns.set.other",
-            "Access to /pn set and /pn clear with the --player flag to set others' pronouns.",
-            3),
+        "Access to /pn set and /pn clear with the --player flag to set others' pronouns.",
+        3),
 
     GET("pronouns.get", "Access to /pn get", 0),
 
     UPDATE("pronouns.update",
-            "Access to /pn update",
-            4),
+        "Access to /pn update",
+        4),
     DEBUG("pronouns.debug",
-            "Access to /pn debug",
-            4),
+        "Access to /pn debug",
+        4),
 
     RELOAD("pronouns.reload",
-                   "Access to /pn reload",
-                   4),
+        "Access to /pn reload",
+        4),
 
     DUMP("pronouns.dump",
-                   "Access to /pn dump",
-                   4);
+        "Access to /pn dump",
+        4);
 
     /**
      * This permission's key.

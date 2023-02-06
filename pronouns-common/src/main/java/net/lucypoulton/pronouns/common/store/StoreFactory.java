@@ -19,7 +19,7 @@ public class StoreFactory {
     public PronounStore create(String key, ProNouns plugin) {
         return switch (key) {
             case "in_memory" -> new InMemoryPronounStore();
-            case "file" -> new FilePronounStore(plugin.platform().dataDir());
+            case "file" -> new FilePronounStore(plugin, plugin.platform().dataDir());
             case "mysql" -> new MySqlPronounStore(plugin, plugin.platform().config().mysql());
             default -> {
                 final var supplier = suppliers.get(key);

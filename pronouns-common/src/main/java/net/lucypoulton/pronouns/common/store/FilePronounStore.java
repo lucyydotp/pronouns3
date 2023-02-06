@@ -1,8 +1,10 @@
 package net.lucypoulton.pronouns.common.store;
 
+import net.lucypoulton.pronouns.api.PronounStore;
 import net.lucypoulton.pronouns.api.set.PronounSet;
 import net.lucypoulton.pronouns.api.supplier.PronounSupplier;
 import net.lucypoulton.pronouns.api.PronounParser;
+import net.lucypoulton.pronouns.common.ProNouns;
 import net.lucypoulton.pronouns.common.util.PropertiesUtil;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,15 +14,15 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class FilePronounStore implements CachedPronounStore {
-
-    private boolean isDirty = false;
+public class FilePronounStore implements PronounStore {
+    private final ProNouns plugin;
     private final Path filePath;
     private final Map<UUID, List<PronounSet>> sets = new HashMap<>();
 
     private static final PronounParser parser = new PronounParser(PronounSet.builtins);
 
-    public FilePronounStore(final Path filePath) {
+    public FilePronounStore(final ProNouns plugin, final Path filePath) {
+        this.plugin = plugin;
         this.filePath = filePath.resolve("pronouns-store.properties");
         if (!Files.exists(this.filePath)) {
             save();
@@ -47,26 +49,12 @@ public class FilePronounStore implements CachedPronounStore {
         }
     }
 
-    private synchronized void save() {
-        if (!isDirty) return;
+    private void save() {
         try {
             writeToFile(sets, filePath, "ProNouns storage file. This file should not be edited while the server is running");
-            this.isDirty = false;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Stub - not needed
-     */
-    @Override
-    public void onPlayerJoin(UUID uuid) {
-    }
-
-    @Override
-    public void onPlayerLeave(UUID uuid) {
-        this.save();
     }
 
     @Override
@@ -83,8 +71,13 @@ public class FilePronounStore implements CachedPronounStore {
     public void set(UUID player, @NotNull List<PronounSet> sets) {
         if (sets.size() == 0) this.sets.remove(player);
         else this.sets.put(player, sets);
-        this.isDirty = true;
-        save();
+        plugin.executorService().execute(this::save);
+    }
+
+    @Override
+    public void setAll(Map<UUID, List<PronounSet>> sets) {
+        sets.forEach(this.sets::putIfAbsent);
+        plugin.executorService().execute(this::save);
     }
 
     @Override

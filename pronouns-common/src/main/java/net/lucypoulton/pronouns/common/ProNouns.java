@@ -50,18 +50,22 @@ public class ProNouns implements ProNounsPlugin {
             platform.logger().info(ProNounsTranslations.translate("pronouns.first-launch"));
         }
 
+        final var helpCommand = new HelpCommand(this, commandManager);
+
         final var commands = List.of(
+                helpCommand,
                 new GetCommand(this, platform),
                 new SetCommand(this, platform),
                 new ClearCommand(this, platform),
                 new VersionCommand(this, platform),
                 new DebugCommand(this, platform),
                 new UpdateCommand(this),
-                new HelpCommand(this, commandManager),
                 new ReloadCommand(this),
-                new DumpCommand(this, platform)
+                new DumpCommand(this, platform),
+                new MigrateCommand(this)
         );
 
+        commandManager.commandBuilder("pronouns", "pn").apply(helpCommand::buildForRoot);
         for (final var command : commands) {
             commandManager.command(
                     commandManager.commandBuilder("pronouns", "pn").apply(command::build)

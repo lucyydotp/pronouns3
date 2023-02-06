@@ -37,6 +37,13 @@ public interface PronounStore {
     void set(UUID player, @NotNull List<PronounSet> sets);
 
     /**
+     * Sets a player's pronouns if not already set.
+     *
+     * @param sets a map of player UUIDs to lists of unique pronoun sets.
+     */
+    void setAll(Map<UUID, List<PronounSet>> sets);
+
+    /**
      * Gets a (possibly unmodifiable) map of every player and the pronouns they have set. This method may block.
      */
     Map<UUID, List<PronounSet>> dump();

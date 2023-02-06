@@ -15,5 +15,9 @@ dependencies {
     compileOnlyApi(libs.adventure.api)
     compileOnlyApi(libs.adventure.text.minimessage)
     compileOnly(libs.gson)
+    compileOnly("org.yaml:snakeyaml:1.33")
     compileOnly(libs.hikari)
+
+    testImplementation("org.yaml:snakeyaml:1.33")
+
 }

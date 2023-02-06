@@ -90,4 +90,9 @@ public class PaperPlatform implements Platform {
     public Config config() {
         return config;
     }
+
+    @Override
+    public boolean migratable() {
+        return true;
+    }
 }

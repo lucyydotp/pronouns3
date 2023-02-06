@@ -44,6 +44,7 @@ public class MySqlPronounStore implements CachedPronounStore, AutoCloseable {
         dataSource.addDataSourceProperty("prepStmtCacheSize", "250");
         dataSource.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
         dataSource.addDataSourceProperty("useServerPrepStmts ", "true");
+        dataSource.addDataSourceProperty("rewriteBatchedStatements", "true");
 
         try (final var con = dataSource.getConnection()) {
             con.prepareStatement("""
@@ -75,6 +76,21 @@ public class MySqlPronounStore implements CachedPronounStore, AutoCloseable {
             stmt.setString(2, parser.toString(sets));
             stmt.setString(3, plugin.meta().identifier());
             stmt.execute();
+        } catch (SQLException e) {
+            plugin.platform().logger().severe("Failed to write pronouns to MySQL: " + e.getMessage());
+        }
+    }
+
+    private void pushAll(Map<UUID, List<PronounSet>> sets) {
+        try (final var con = dataSource.getConnection()) {
+            final var stmt = con.prepareStatement("REPLACE INTO pronouns (player, pronouns, last_updated_from) VALUES (?, ?, ?)");
+            for (final var entry : sets.entrySet()) {
+                stmt.setString(1, entry.getKey().toString());
+                stmt.setString(2, parser.toString(entry.getValue()));
+                stmt.setString(3, plugin.meta().identifier());
+                stmt.addBatch();
+            }
+            stmt.executeBatch();
         } catch (SQLException e) {
             plugin.platform().logger().severe("Failed to write pronouns to MySQL: " + e.getMessage());
         }
@@ -133,7 +149,14 @@ public class MySqlPronounStore implements CachedPronounStore, AutoCloseable {
     }
 
     @Override
+    public void setAll(Map<UUID, List<PronounSet>> sets) {
+        sets.forEach(cache::putIfAbsent);
+        plugin.executorService().submit(() -> pushAll(sets));
+    }
+
+    @Override
     public Map<UUID, List<PronounSet>> dump() {
+        // fixme
         throw new RuntimeException("L + ratio + get better");
     }
 

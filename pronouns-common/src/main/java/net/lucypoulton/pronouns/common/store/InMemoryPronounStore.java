@@ -31,6 +31,11 @@ public class InMemoryPronounStore implements PronounStore {
     }
 
     @Override
+    public void setAll(Map<UUID, List<PronounSet>> sets) {
+        sets.forEach(storage::putIfAbsent);
+    }
+
+    @Override
     public Map<UUID, List<PronounSet>> dump() {
         return Collections.unmodifiableMap(storage);
     }

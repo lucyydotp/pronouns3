@@ -69,4 +69,11 @@ public interface Platform {
      * Broadcasts a message to the console, and every player with a permission.
      */
     void broadcast(Component component, String permission);
+
+    /**
+     * Returns whether this platform is capable of runnning ProNouns 2.x, and therefore may have data available to migrate.
+     */
+    default boolean migratable() {
+        return false;
+    }
 }

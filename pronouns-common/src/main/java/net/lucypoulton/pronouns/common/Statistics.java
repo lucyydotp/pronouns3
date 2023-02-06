@@ -34,7 +34,7 @@ class Statistics {
 
         return new Gson().toJson(out);
     }
-
+    
     public void send() {
         final var req = HttpRequest.newBuilder()
                 .uri(ENDPOINT)
@@ -43,9 +43,7 @@ class Statistics {
                 .POST(HttpRequest.BodyPublishers.ofString(statistics()))
                 .build();
         try {
-            platform.logger().warning("sending stats");
-            final var res = HttpUtil.client().send(req, HttpResponse.BodyHandlers.discarding());
-            platform.logger().warning(String.valueOf(res.statusCode()));
+            HttpUtil.client().send(req, HttpResponse.BodyHandlers.discarding());
         } catch (Exception ex) {
             platform.logger().warning("Failed to upload statistics. Please report this!" + ex);
         }

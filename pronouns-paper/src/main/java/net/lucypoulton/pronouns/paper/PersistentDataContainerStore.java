@@ -51,7 +51,12 @@ public class PersistentDataContainerStore implements PronounStore {
     }
 
     @Override
+    public void setAll(Map<UUID, List<PronounSet>> sets) {
+        throw new UnsupportedOperationException("PDC (paper NBT) store does not support setting all");
+    }
+
+    @Override
     public Map<UUID, List<PronounSet>> dump() {
-        throw new IllegalStateException("PDC (paper NBT) store does not support dumping");
+        throw new UnsupportedOperationException("PDC (paper NBT) store does not support dumping");
     }
 }

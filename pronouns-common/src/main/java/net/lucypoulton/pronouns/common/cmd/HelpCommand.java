@@ -64,4 +64,8 @@ public class HelpCommand implements ProNounsCommand {
                         ctx.getOrDefault("query", null))
                 );
     }
+
+    public Command.Builder<CommandSender> buildForRoot(Command.Builder<CommandSender> builder) {
+        return builder.handler(ctx -> execute(ctx.getSender(), null));
+    }
 }

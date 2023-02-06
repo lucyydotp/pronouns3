@@ -79,6 +79,12 @@ public class NBTPronounStore extends PersistentState implements PronounStore {
     }
 
     @Override
+    public void setAll(Map<UUID, List<PronounSet>> sets) {
+        pronounSets.putAll(sets);
+        markDirty();
+    }
+
+    @Override
     public Map<UUID, List<PronounSet>> dump() {
         return Collections.unmodifiableMap(pronounSets);
     }
