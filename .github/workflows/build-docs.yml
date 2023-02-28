@@ -3,10 +3,8 @@ name: Build docs
 on:
   push:
     branches: ["main"]
-
   workflow_dispatch:
-  
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+
 permissions:
   contents: read
   pages: write
@@ -19,14 +17,11 @@ env:
 jobs:
   build-job:
     runs-on: ubuntu-latest
-    container: 
-      image: registry.jetbrains.team/p/writerside/builder/writerside-builder:2.1.984
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - run: |  
-          set -e
-          /opt/builder/bin/idea.sh helpbuilderinspect -source-dir ./docs -product $PRODUCT -output-dir artifacts/ || true
+      - name: Build Writerside docs using Docker
+        uses: JetBrains/writerside-github-action@v3
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
