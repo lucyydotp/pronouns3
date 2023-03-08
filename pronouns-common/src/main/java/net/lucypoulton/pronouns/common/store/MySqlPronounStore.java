@@ -1,11 +1,12 @@
 package net.lucypoulton.pronouns.common.store;
 
 import com.zaxxer.hikari.HikariDataSource;
+import net.lucypoulton.pronouns.api.PronounParser;
 import net.lucypoulton.pronouns.api.set.PronounSet;
 import net.lucypoulton.pronouns.api.supplier.PronounSupplier;
-import net.lucypoulton.pronouns.api.PronounParser;
 import net.lucypoulton.pronouns.common.ProNouns;
 import net.lucypoulton.pronouns.common.platform.config.Config;
+import net.lucypoulton.pronouns.common.util.UuidUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
@@ -49,9 +50,9 @@ public class MySqlPronounStore implements CachedPronounStore, AutoCloseable {
         try (final var con = dataSource.getConnection()) {
             con.prepareStatement("""
                     CREATE TABLE IF NOT EXISTS pronouns (
-                        player UUID PRIMARY KEY,
+                        player BINARY(16) PRIMARY KEY,
                         pronouns TEXT NOT NULL,
-                        last_updated_from UUID NOT NULL,
+                        last_updated_from TEXT NOT NULL,
                         last_updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
                     )
                     """).execute();
@@ -67,12 +68,12 @@ public class MySqlPronounStore implements CachedPronounStore, AutoCloseable {
         try (final var con = dataSource.getConnection()) {
             if (sets.size() == 0) {
                 final var stmt = con.prepareStatement("DELETE FROM pronouns WHERE player=?");
-                stmt.setString(1, uuid.toString());
+                stmt.setBytes(1, UuidUtil.toBytes(uuid));
                 stmt.execute();
                 return;
             }
             final var stmt = con.prepareStatement("REPLACE INTO pronouns (player, pronouns, last_updated_from) VALUES (?, ?, ?)");
-            stmt.setString(1, uuid.toString());
+            stmt.setBytes(1, UuidUtil.toBytes(uuid));
             stmt.setString(2, parser.toString(sets));
             stmt.setString(3, plugin.meta().identifier());
             stmt.execute();
@@ -85,7 +86,7 @@ public class MySqlPronounStore implements CachedPronounStore, AutoCloseable {
         try (final var con = dataSource.getConnection()) {
             final var stmt = con.prepareStatement("REPLACE INTO pronouns (player, pronouns, last_updated_from) VALUES (?, ?, ?)");
             for (final var entry : sets.entrySet()) {
-                stmt.setString(1, entry.getKey().toString());
+                stmt.setBytes(1, UuidUtil.toBytes(entry.getKey()));
                 stmt.setString(2, parser.toString(entry.getValue()));
                 stmt.setString(3, plugin.meta().identifier());
                 stmt.addBatch();
@@ -115,7 +116,7 @@ public class MySqlPronounStore implements CachedPronounStore, AutoCloseable {
             stmt.setString(2, plugin.meta().identifier());
             final var results = stmt.executeQuery();
             while (results.next()) {
-                final var uuid = UUID.fromString(results.getString("player"));
+                final var uuid = UuidUtil.fromBytes(results.getBytes("player"));
                 if (!cache.containsKey(uuid)) continue;
                 final var newSets = parser.parse(results.getString("pronouns"));
                 cache.put(uuid, newSets);
@@ -164,7 +165,7 @@ public class MySqlPronounStore implements CachedPronounStore, AutoCloseable {
     public void onPlayerJoin(UUID uuid) {
         try (final var con = dataSource.getConnection()) {
             final var stmt = con.prepareStatement("SELECT pronouns FROM pronouns WHERE player=?");
-            stmt.setString(1, uuid.toString());
+            stmt.setBytes(1, UuidUtil.toBytes(uuid));
             final var resultSet = stmt.executeQuery();
             if (!resultSet.next()) return;
             cache.put(uuid, parser.parse(resultSet.getString("pronouns")));
