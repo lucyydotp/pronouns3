@@ -20,6 +20,8 @@ I assume absolutely no responsibility if this plugin breaks anything - use at yo
 
 # Installation
 
+All builds are hosted at https://modrinth.com/plugin/pronouns
+
 ### Paper
 
 Download the Paper jarfile and place it into your `plugins` folder. Restart your server.
@@ -38,4 +40,4 @@ Support for these three platforms is planned but not yet implemented.
 
 ProNouns anonymously collects some statistics, similar to bStats. Details of what's collected, your rights, and how to 
 opt out can be found at the documentation page.
-FIXME - link to docs here
+[ProNouns Docs](https://lucyydotp.github.io/pronouns3/getting-started.html)
