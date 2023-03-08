@@ -50,7 +50,7 @@ public class MySqlPronounStore implements CachedPronounStore, AutoCloseable {
         try (final var con = dataSource.getConnection()) {
             con.prepareStatement("""
                     CREATE TABLE IF NOT EXISTS pronouns (
-                        player BINARY(128) PRIMARY KEY,
+                        player BINARY(16) PRIMARY KEY,
                         pronouns TEXT NOT NULL,
                         last_updated_from TEXT NOT NULL,
                         last_updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
