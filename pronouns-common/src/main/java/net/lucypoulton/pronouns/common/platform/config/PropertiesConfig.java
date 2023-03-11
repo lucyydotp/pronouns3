@@ -3,13 +3,13 @@ package net.lucypoulton.pronouns.common.platform.config;
 import net.lucypoulton.pronouns.common.UpdateChecker.Channel;
 import net.lucypoulton.pronouns.common.util.PropertiesUtil;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Locale;
 import java.util.Properties;
-import java.util.logging.Logger;
 
 public class PropertiesConfig implements Config {
     private final Path path;
@@ -57,7 +57,7 @@ public class PropertiesConfig implements Config {
             case "beta" -> Channel.BETA;
             case "release" -> Channel.RELEASE;
             default -> {
-                logger.warning("Unknown update channel " + channelString + ", falling back to release.");
+                logger.warn("Unknown update channel " + channelString + ", falling back to release.");
                 yield Channel.RELEASE;
             }
         };
@@ -78,7 +78,7 @@ public class PropertiesConfig implements Config {
         try {
             reloadConfig();
         } catch (IOException e) {
-            logger.severe(e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 

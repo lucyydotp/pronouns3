@@ -25,5 +25,7 @@ dependencyResolutionManagement {
         library("hikari", "com.zaxxer:HikariCP:5.0.1")
 
         library("gson", "com.google.code.gson:gson:2.10")
+
+        library("slf4j", "org.slf4j:slf4j-api:2.0.6")
     }
 }

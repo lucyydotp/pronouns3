@@ -33,7 +33,7 @@ public class MigrateCommand implements ProNounsCommand {
         final var logger = plugin.platform().logger();
 
         if (!plugin.platform().migratable()) {
-            logger.warning(ProNounsTranslations.translate("pronouns.migrate.invalid-platform"));
+            logger.warn(ProNounsTranslations.translate("pronouns.migrate.invalid-platform"));
             return;
         }
         final var source = context.<MigrationSource>get("source");
@@ -43,7 +43,7 @@ public class MigrateCommand implements ProNounsCommand {
         if (source == MigrationSource.YML) {
             final var path = plugin.platform().dataDir().resolve("datastore.yml");
             if (!Files.exists(path)) {
-                logger.warning("No legacy datastore found to migrate.");
+                logger.warn("No legacy datastore found to migrate.");
                 return;
             }
             sets = LegacyMigrator.fromYaml(path);

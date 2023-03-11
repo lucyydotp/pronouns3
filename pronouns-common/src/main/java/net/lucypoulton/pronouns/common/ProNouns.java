@@ -85,7 +85,7 @@ public class ProNouns implements ProNounsPlugin {
 
         } else {
             checker = null;
-            platform.logger().warning(isDevelopmentVersion ?
+            platform.logger().warn(isDevelopmentVersion ?
                     "Development version " + platform.currentVersion() + ", disabling update checker." :
                     ProNounsTranslations.translate("pronouns.update.disabled"));
         }

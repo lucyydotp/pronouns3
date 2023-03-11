@@ -14,6 +14,7 @@ dependencies {
     compileOnlyApi(libs.cloud.core)
     compileOnlyApi(libs.adventure.api)
     compileOnlyApi(libs.adventure.text.minimessage)
+    compileOnlyApi(libs.slf4j)
     compileOnly(libs.gson)
     compileOnly("org.yaml:snakeyaml:1.33")
     compileOnly(libs.hikari)

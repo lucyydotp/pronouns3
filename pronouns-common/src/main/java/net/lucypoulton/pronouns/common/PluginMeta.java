@@ -40,7 +40,7 @@ public class PluginMeta {
                 final var identifier = (String) fileData.get("identifier");
                 final var lastPluginVersion = (String) fileData.get("lastPluginVersion");
                 if (identifier == null || lastPluginVersion == null) {
-                    platform.logger().warning("""
+                    platform.logger().warn("""
                     Meta file has been tampered with!
                     pronouns-meta.cfg is not intended for editing.
                     Recreating it now.""");

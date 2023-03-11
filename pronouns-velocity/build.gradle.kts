@@ -14,6 +14,8 @@ repositories {
 dependencies {
     compileOnly("com.velocitypowered:velocity-api:3.1.0")
     annotationProcessor("com.velocitypowered:velocity-annotation-processor:4.0.0-SNAPSHOT")
+
+    shadow(project(":pronouns-common"))
 }
 
 blossom {
