@@ -12,8 +12,8 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.velocitypowered:velocity-api:3.1.0")
-    annotationProcessor("com.velocitypowered:velocity-annotation-processor:4.0.0-SNAPSHOT")
+    compileOnly("com.velocitypowered:velocity-api:3.1.1")
+    annotationProcessor("com.velocitypowered:velocity-annotation-processor:3.1.1")
 
     shadow(project(":pronouns-common"))
     shadow(libs.cloud.velocity)
