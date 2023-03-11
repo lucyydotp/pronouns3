@@ -1,6 +1,6 @@
 rootProject.name = "pronouns"
 
-include("pronouns-core", "pronouns-common", "pronouns-fabric", "pronouns-paper")
+include("pronouns-core", "pronouns-common", "pronouns-fabric", "pronouns-paper", "pronouns-velocity")
 
 pluginManagement {
     repositories {
