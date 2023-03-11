@@ -145,7 +145,8 @@ public class MySqlPronounStore implements CachedPronounStore, AutoCloseable {
 
     @Override
     public void set(UUID player, @NotNull List<PronounSet> sets) {
-        cache.put(player, sets);
+        if (sets.size() == 0) cache.remove(player);
+        else cache.put(player, sets);
         plugin.executorService().submit(() -> push(player, sets));
     }
 
