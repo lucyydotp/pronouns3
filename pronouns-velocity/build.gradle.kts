@@ -16,6 +16,10 @@ dependencies {
     annotationProcessor("com.velocitypowered:velocity-annotation-processor:4.0.0-SNAPSHOT")
 
     shadow(project(":pronouns-common"))
+    shadow(libs.cloud.velocity)
+    shadow(libs.hikari) {
+        exclude("org.slf4j")
+    }
 }
 
 blossom {

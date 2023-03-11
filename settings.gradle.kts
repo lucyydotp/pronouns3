@@ -19,7 +19,7 @@ dependencyResolutionManagement {
         listOf("api", "text-minimessage").forEach {
             library("adventure.$it", "net.kyori", "adventure-$it").versionRef("adventure")
         }
-        listOf("core", "fabric", "paper").forEach {
+        listOf("core", "fabric", "paper", "velocity").forEach {
             library("cloud.$it", "cloud.commandframework", "cloud-$it").versionRef("cloud")
         }
         library("hikari", "com.zaxxer:HikariCP:5.0.1")

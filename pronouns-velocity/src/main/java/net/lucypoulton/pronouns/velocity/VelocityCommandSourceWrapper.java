@@ -37,4 +37,8 @@ public class VelocityCommandSourceWrapper implements CommandSender, ForwardingAu
     public @NotNull Audience audience() {
         return source;
     }
+
+    public CommandSource source() {
+        return source;
+    }
 }
