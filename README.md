@@ -4,6 +4,8 @@ This is a work-in-progress rewrite of my plugin [ProNouns](https://github.com/lu
 ProNouns is a plugin that lets players set their pronouns, making their experience on the server that little bit more
 personal.
 
+[Docs (temporary link)](https://lucyydotp.github.io/pronouns3/getting-started.html)
+
 ## THIS IS PRE-RELEASE SOFTWARE
 
 I assume absolutely no responsibility if this plugin breaks anything - use at your own risk.
@@ -20,7 +22,7 @@ I assume absolutely no responsibility if this plugin breaks anything - use at yo
 
 # Installation
 
-All builds are hosted at https://modrinth.com/plugin/pronouns
+All releases are hosted at https://modrinth.com/plugin/pronouns.
 
 ### Paper
 
@@ -40,4 +42,3 @@ Support for these three platforms is planned but not yet implemented.
 
 ProNouns anonymously collects some statistics, similar to bStats. Details of what's collected, your rights, and how to 
 opt out can be found at the documentation page.
-[ProNouns Docs](https://lucyydotp.github.io/pronouns3/getting-started.html)
