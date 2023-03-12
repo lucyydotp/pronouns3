@@ -115,4 +115,9 @@ public class FabricPlatform implements Platform {
     public List<String> listPlayers() {
         return List.of(server.getPlayerNames());
     }
+
+    @Override
+    public String[] commandAliases() {
+        return new String[]{"pronounsfabric", "pnfabric", "pnf"};
+    }
 }

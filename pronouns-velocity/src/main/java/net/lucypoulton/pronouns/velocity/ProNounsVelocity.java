@@ -135,4 +135,9 @@ public class ProNounsVelocity implements Platform {
     public void broadcast(Component component, String permission) {
         // fixme
     }
+
+    @Override
+    public String[] commandAliases() {
+        return new String[]{"pronounsvelocity", "pnvelocity", "pnv"};
+    }
 }

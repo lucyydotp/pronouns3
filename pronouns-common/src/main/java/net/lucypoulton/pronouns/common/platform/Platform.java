@@ -76,4 +76,11 @@ public interface Platform {
     default boolean migratable() {
         return false;
     }
+
+    /**
+     * Gets a list of aliases to register the root command under.
+     */
+    default String[] commandAliases() {
+        return new String[0];
+    }
 }

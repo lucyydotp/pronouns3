@@ -95,4 +95,9 @@ public class PaperPlatform implements Platform {
     public boolean migratable() {
         return true;
     }
+
+    @Override
+    public String[] commandAliases() {
+        return new String[]{"pronounspaper", "pnpaper", "pnp"};
+    }
 }
