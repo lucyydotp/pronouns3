@@ -13,7 +13,7 @@ repositories {
 
 dependencies {
     compileOnly("com.velocitypowered:velocity-api:3.1.1")
-    annotationProcessor("com.velocitypowered:velocity-annotation-processor:3.1.1")
+    annotationProcessor("com.velocitypowered:velocity-api:3.1.1")
 
     shadow(project(":pronouns-common"))
     shadow(libs.cloud.velocity)
@@ -23,7 +23,7 @@ dependencies {
 }
 
 blossom {
-    val file = "src/main/java/net/lucypoulton/pronouns/velocity/ProNounsVelocity.java"
+    val file = "src/main/java/net/lucypoulton/pronouns/velocity/BuildConstants.java"
     replaceToken("\${version}", version, file)
 }
 

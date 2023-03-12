@@ -9,6 +9,8 @@ import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.connection.LoginEvent;
 import com.velocitypowered.api.network.ProtocolVersion;
 import com.velocitypowered.api.plugin.Plugin;
+import com.velocitypowered.api.plugin.PluginContainer;
+import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.adventure.text.Component;
@@ -22,13 +24,14 @@ import net.lucypoulton.pronouns.common.store.StoreFactory;
 import org.slf4j.Logger;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Plugin(
-        id = "pronouns-velocity",
+        id = "pronouns",
         name = "ProNouns",
         version = BuildConstants.VERSION
 )
@@ -43,16 +46,17 @@ public class ProNounsVelocity implements Platform {
     private final ProNouns plugin;
 
     @Inject
-    public ProNounsVelocity(ProxyServer server, Logger logger, Path dataDir) {
+    public ProNounsVelocity(PluginContainer container, ProxyServer server, Logger logger, @DataDirectory Path dataDir) {
         this.server = server;
         this.logger = logger;
-        this.commandManager = new VelocityCommandManager<>(null,
+        this.commandManager = new VelocityCommandManager<>(container,
                 server,
                 CommandExecutionCoordinator.simpleCoordinator(),
                 VelocityCommandSourceWrapper::new,
                 sender -> ((VelocityCommandSourceWrapper) sender).source());
         this.dataDir = dataDir;
         try {
+            Files.createDirectories(dataDir);
             this.config = new PropertiesConfig(dataDir().resolve("pronouns.cfg"), logger()).reloadConfig();
         } catch (IOException e) {
             throw new RuntimeException(e);
