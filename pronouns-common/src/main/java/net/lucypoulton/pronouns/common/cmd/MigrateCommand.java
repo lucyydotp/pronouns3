@@ -32,10 +32,6 @@ public class MigrateCommand implements ProNounsCommand {
     private void execute(final CommandContext<CommandSender> context) {
         final var logger = plugin.platform().logger();
 
-        if (!plugin.platform().migratable()) {
-            logger.warn(ProNounsTranslations.translate("pronouns.migrate.invalid-platform"));
-            return;
-        }
         final var source = context.<MigrationSource>get("source");
         logger.info(ProNounsTranslations.translate("pronouns.migrate.start"));
         Map<UUID, List<PronounSet>> sets;
@@ -62,5 +58,10 @@ public class MigrateCommand implements ProNounsCommand {
             .argument(EnumArgument.builder(MigrationSource.class, "source"))
             .flag(CommandFlag.builder("confirm"))
             .handler(this::execute);
+    }
+
+    @Override
+    public boolean shouldRegister() {
+        return plugin.platform().migratable();
     }
 }

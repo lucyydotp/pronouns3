@@ -67,6 +67,7 @@ public class ProNouns implements ProNounsPlugin {
 
         commandManager.commandBuilder("pronouns", "pn").apply(helpCommand::buildForRoot);
         for (final var command : commands) {
+            if (!command.shouldRegister()) continue;
             commandManager.command(
                     commandManager.commandBuilder("pronouns", "pn").apply(command::build)
             );
