@@ -133,7 +133,10 @@ public class ProNounsVelocity implements Platform {
 
     @Override
     public void broadcast(Component component, String permission) {
-        // fixme
+        for (final var player: server.getAllPlayers()) {
+            if (!player.hasPermission(permission)) continue;
+            player.sendMessage(component);
+        }
     }
 
     @Override
