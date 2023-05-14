@@ -10,13 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Optional;
 import java.util.UUID;
 
-public class VelocityCommandSourceWrapper implements CommandSender, ForwardingAudience.Single {
-
-    private final CommandSource source;
-
-    public VelocityCommandSourceWrapper(CommandSource source) {
-        this.source = source;
-    }
+public record VelocityCommandSourceWrapper(CommandSource source) implements CommandSender, ForwardingAudience.Single {
 
     @Override
     public Optional<UUID> uuid() {
@@ -35,10 +29,6 @@ public class VelocityCommandSourceWrapper implements CommandSender, ForwardingAu
 
     @Override
     public @NotNull Audience audience() {
-        return source;
-    }
-
-    public CommandSource source() {
         return source;
     }
 }

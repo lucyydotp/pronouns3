@@ -39,7 +39,7 @@ public class ProNounsVelocity implements Platform {
 
     private final ProxyServer server;
     private final org.slf4j.Logger logger;
-    private final CommandManager<CommandSender> commandManager;
+    private final VelocityCommandManager<CommandSender> commandManager;
     private final Config config;
 
     private final Path dataDir;
@@ -49,6 +49,7 @@ public class ProNounsVelocity implements Platform {
     public ProNounsVelocity(PluginContainer container, ProxyServer server, Logger logger, @DataDirectory Path dataDir) {
         this.server = server;
         this.logger = logger;
+        // fixme - make this less jank
         this.commandManager = new VelocityCommandManager<>(container,
                 server,
                 CommandExecutionCoordinator.simpleCoordinator(),

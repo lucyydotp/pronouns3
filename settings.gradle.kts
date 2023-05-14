@@ -14,8 +14,8 @@ dependencyResolutionManagement {
         maven("https://libraries.minecraft.net")
     }
     versionCatalogs.create("libs") {
-        version("adventure", "4.12.0")
-        version("cloud", "1.8.0")
+        version("adventure", "4.13.1")
+        version("cloud", "1.8.3")
         listOf("api", "text-minimessage").forEach {
             library("adventure.$it", "net.kyori", "adventure-$it").versionRef("adventure")
         }
