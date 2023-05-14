@@ -12,6 +12,7 @@ import net.lucypoulton.pronouns.common.platform.Platform;
 import net.lucypoulton.pronouns.common.store.StoreFactory;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -65,10 +66,14 @@ public class ProNouns implements ProNounsPlugin {
                 new MigrateCommand(this)
         );
 
-        commandManager.commandBuilder("pronouns", "pn").apply(helpCommand::buildForRoot);
+        final var aliases = Arrays.copyOf(platform.commandAliases(), platform.commandAliases().length + 1);
+        aliases[aliases.length - 1]  = "pn";
+
+        commandManager.commandBuilder("pronouns", aliases).apply(helpCommand::buildForRoot);
         for (final var command : commands) {
+            if (!command.shouldRegister()) continue;
             commandManager.command(
-                    commandManager.commandBuilder("pronouns", "pn").apply(command::build)
+                    commandManager.commandBuilder("pronouns", aliases).apply(command::build)
             );
         }
 
@@ -85,7 +90,7 @@ public class ProNouns implements ProNounsPlugin {
 
         } else {
             checker = null;
-            platform.logger().warning(isDevelopmentVersion ?
+            platform.logger().warn(isDevelopmentVersion ?
                     "Development version " + platform.currentVersion() + ", disabling update checker." :
                     ProNounsTranslations.translate("pronouns.update.disabled"));
         }

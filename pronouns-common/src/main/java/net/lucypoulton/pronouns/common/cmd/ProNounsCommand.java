@@ -5,4 +5,8 @@ import net.lucypoulton.pronouns.common.platform.CommandSender;
 
 public interface ProNounsCommand {
     Command.Builder<CommandSender> build(Command.Builder<CommandSender> builder);
+
+    default boolean shouldRegister() {
+        return true;
+    }
 }

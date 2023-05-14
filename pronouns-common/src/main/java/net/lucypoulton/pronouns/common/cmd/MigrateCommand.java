@@ -32,10 +32,6 @@ public class MigrateCommand implements ProNounsCommand {
     private void execute(final CommandContext<CommandSender> context) {
         final var logger = plugin.platform().logger();
 
-        if (!plugin.platform().migratable()) {
-            logger.warning(ProNounsTranslations.translate("pronouns.migrate.invalid-platform"));
-            return;
-        }
         final var source = context.<MigrationSource>get("source");
         logger.info(ProNounsTranslations.translate("pronouns.migrate.start"));
         Map<UUID, List<PronounSet>> sets;
@@ -43,7 +39,7 @@ public class MigrateCommand implements ProNounsCommand {
         if (source == MigrationSource.YML) {
             final var path = plugin.platform().dataDir().resolve("datastore.yml");
             if (!Files.exists(path)) {
-                logger.warning("No legacy datastore found to migrate.");
+                logger.warn("No legacy datastore found to migrate.");
                 return;
             }
             sets = LegacyMigrator.fromYaml(path);
@@ -62,5 +58,10 @@ public class MigrateCommand implements ProNounsCommand {
             .argument(EnumArgument.builder(MigrationSource.class, "source"))
             .flag(CommandFlag.builder("confirm"))
             .handler(this::execute);
+    }
+
+    @Override
+    public boolean shouldRegister() {
+        return plugin.platform().migratable();
     }
 }

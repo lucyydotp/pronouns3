@@ -136,7 +136,7 @@ public class UpdateChecker {
             broadcast(handle(body));
 
         } catch (Exception ex) {
-            platform.logger().warning("Failed to check for updates: " +
+            platform.logger().warn("Failed to check for updates: " +
                     (ex.getCause() == null ? ex : ex.getCause()).toString());
 
         }

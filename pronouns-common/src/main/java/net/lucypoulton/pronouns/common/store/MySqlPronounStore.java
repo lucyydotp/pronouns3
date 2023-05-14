@@ -78,7 +78,7 @@ public class MySqlPronounStore implements CachedPronounStore, AutoCloseable {
             stmt.setString(3, plugin.meta().identifier());
             stmt.execute();
         } catch (SQLException e) {
-            plugin.platform().logger().severe("Failed to write pronouns to MySQL: " + e.getMessage());
+            plugin.platform().logger().error("Failed to write pronouns to MySQL: " + e.getMessage());
         }
     }
 
@@ -93,7 +93,7 @@ public class MySqlPronounStore implements CachedPronounStore, AutoCloseable {
             }
             stmt.executeBatch();
         } catch (SQLException e) {
-            plugin.platform().logger().severe("Failed to write pronouns to MySQL: " + e.getMessage());
+            plugin.platform().logger().error("Failed to write pronouns to MySQL: " + e.getMessage());
         }
     }
 
@@ -129,7 +129,7 @@ public class MySqlPronounStore implements CachedPronounStore, AutoCloseable {
             }
             lastTimestamp = Instant.now();
         } catch (Exception e) {
-            plugin.platform().logger().severe("Failed to update pronoun cache from MySQL: " + e.getMessage());
+            plugin.platform().logger().error("Failed to update pronoun cache from MySQL: " + e.getMessage());
         }
     }
 
@@ -171,7 +171,7 @@ public class MySqlPronounStore implements CachedPronounStore, AutoCloseable {
             if (!resultSet.next()) return;
             cache.put(uuid, parser.parse(resultSet.getString("pronouns")));
         } catch (SQLException e) {
-            plugin.platform().logger().severe("Failed to fetch pronouns from MySQL: " + e.getMessage());
+            plugin.platform().logger().error("Failed to fetch pronouns from MySQL: " + e.getMessage());
         }
     }
 

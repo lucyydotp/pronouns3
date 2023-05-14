@@ -10,12 +10,12 @@ import net.lucypoulton.pronouns.common.platform.config.Config;
 import net.lucypoulton.pronouns.common.platform.config.PropertiesConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.slf4j.Logger;
 
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 public class PaperPlatform implements Platform {
 
@@ -58,7 +58,7 @@ public class PaperPlatform implements Platform {
 
     @Override
     public Logger logger() {
-        return plugin.getLogger();
+        return plugin.getSLF4JLogger();
     }
 
     @Override
@@ -94,5 +94,10 @@ public class PaperPlatform implements Platform {
     @Override
     public boolean migratable() {
         return true;
+    }
+
+    @Override
+    public String[] commandAliases() {
+        return new String[]{"pronounspaper", "pnpaper", "pnp"};
     }
 }

@@ -3,12 +3,12 @@ package net.lucypoulton.pronouns.common.platform;
 import cloud.commandframework.CommandManager;
 import net.kyori.adventure.text.Component;
 import net.lucypoulton.pronouns.common.platform.config.Config;
+import org.slf4j.Logger;
 
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 /**
  * Provides platform-specific methods.
@@ -75,5 +75,12 @@ public interface Platform {
      */
     default boolean migratable() {
         return false;
+    }
+
+    /**
+     * Gets a list of aliases to register the root command under.
+     */
+    default String[] commandAliases() {
+        return new String[0];
     }
 }
